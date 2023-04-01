@@ -1,0 +1,13 @@
+<div class="flex flex-wrap gap-2">
+  <%= link_to "Open Modal", post_path(@post), class: button_classes, data: {turbo_frame: "modal"} %>
+  <%= link_to "Open Modal (new post)", new_post_path(Post.new), class: button_classes, data: {turbo_frame: "modal"} %>
+  <%= link_to "Open Modal (advance history)", post_path(@post, advance: "1"), class: button_classes, data: {turbo_frame: "modal"} %>
+  <%= link_to "Open Modal (no frame)", modal_path(:photo, frame: 0, advance: 1), class: button_classes, data: {turbo_frame: "modal"} %>
+  <%= link_to "Open Scrolling Modal", modal_path(:long, advance: 1), class: button_classes, data: {turbo_frame: "modal"} %>
+</div>
+
+<div class="mt-8 space-y-2 text-gray-300">
+  <% 30.times do %>
+    <p><%= @@lorem ||= Faker::Lorem.paragraph(sentence_count: 50) %></p>
+  <% end %>
+</div>
