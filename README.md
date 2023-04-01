@@ -42,6 +42,12 @@ open http://localhost:3000
 
 &nbsp;
 &nbsp;
+# Video demo
+
+[https://youtu.be/eG5uWTH74NA](https://youtu.be/eG5uWTH74NA)
+
+&nbsp;
+&nbsp;
 # Installation inside your own Rails app
 
 There are a few simple steps involved in getting up and running.
