@@ -71,8 +71,8 @@ PS: If you wish, please review [`install.rb`](https://github.com/cmer/ultimate-t
 
 There are a few things you should do manually:
 
-1. Add `app/components` to your Tailwind `content` block. The file is at `config/tailwind.config.js`.
-2. Add the following code to your Javascript entrypoint. For example, `javascript/application.js`:
+1. Add `app/components` to your Tailwind `content` block. The file is at [`config/tailwind.config.js`](https://github.com/cmer/ultimate-turbo-modal/blob/main/config/tailwind.config.js).
+2. Add the following code to your Javascript entrypoint. For example, [`javascript/application.js`](https://github.com/cmer/ultimate-turbo-modal/blob/main/app/javascript/application.js):
 
 ```javascript
 // Handle frame-missing events gracefully for redirects, like in Turbo 7.2
