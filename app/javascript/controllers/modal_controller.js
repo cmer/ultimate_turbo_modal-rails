@@ -9,6 +9,8 @@ export default class extends Controller {
     let _this = this
     this.showModal()
 
+    this.turboFrame = this.element.closest('turbo-frame');
+
     // hide modal when back button is pressed
     window.addEventListener('popstate', function (event) {
       if (_this.#hasHistoryAdvanced()) _this.#resetModalElement()
@@ -32,8 +34,16 @@ export default class extends Controller {
     // Sometimes some events are double-triggered.
     if (this.hidingModal) return
     this.hidingModal = true
+
+    let event = new Event('modal:closing', { cancelable: true })
+    this.turboFrame.dispatchEvent(event)
+    if (event.defaultPrevented) return
+
     this.#resetModalElement()
     this.#unlockBodyScroll()
+
+    event = new Event('modal:closed', { cancelable: false })
+    this.turboFrame.dispatchEvent(event)
 
     if (this.#hasHistoryAdvanced())
       history.back()
@@ -60,7 +70,7 @@ export default class extends Controller {
 
   #resetModalElement() {
     leave(this.containerTarget).then(() => {
-      this.element.closest('turbo-frame')?.removeAttribute("src")
+      this.turboFrame.removeAttribute("src")
       this.containerTarget.remove()
       this.#resetHistoryAdvanced()
     })
