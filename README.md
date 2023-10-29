@@ -90,6 +90,9 @@ document.addEventListener("turbo:frame-missing", function (event) {
 // do not intend to allow navigation within the modal.
 //
 // Note that Turbo 8 will include Idiomorph by default.
+//
+// In the meantime, add `<script src="https://unpkg.com/idiomorph"></script>`
+// to your HTML <head>.
 addEventListener("turbo:before-frame-render", (event) => {
   event.detail.render = (currentElement, newElement) => {
      Idiomorph.morph(currentElement, newElement, {
