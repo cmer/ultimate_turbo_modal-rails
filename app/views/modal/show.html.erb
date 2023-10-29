@@ -1,4 +1,4 @@
-<%= render UI::Modal.new(frame: @frame, advance_history: @advance_history, advance_history_url: @override_url) do %>
+<%= render UI::Modal.new(padding: @padding, advance_history: @advance_history, advance_history_url: @override_url) do %>
   <% unless inside_modal? %>
     <h1 class="text-2xl mb-8">This is not inside a modal</h1>
   <% end %>

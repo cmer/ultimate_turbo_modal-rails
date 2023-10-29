@@ -2,24 +2,24 @@
 
 # A Turbo modal window component to display any kind of content
 class UI::Modal < ViewComponent::Base
-  # @param frame [Boolean] Whether to show a frame and padding around the modal content
+  # @param padding [Boolean] Whether to add padding around the modal content
   # @param close_button [Boolean] Whether to show a close button
   # @param advance_history [Boolean] Whether to update the browser history when opening and closing the modal
   # @param advance_history_url [String] Override the URL to use when advancing the history
   def initialize(
-    frame: true,
+    padding: true,
     close_button: true,
     advance_history: true,
     advance_history_url: nil
   )
-    @frame = frame
+    @padding = padding
     @close_button = close_button
     @advance_history = advance_history
     @advance_history_url = advance_history_url
   end
 
-  def frame?
-    !!@frame
+  def padding?
+    !!@padding
   end
 
   def advance_history?
@@ -27,14 +27,14 @@ class UI::Modal < ViewComponent::Base
   end
 
   def close_button?
-    !!@close_button && frame?
+    !!@close_button && padding?
   end
 
-  def frame_classes
+  def padding_classes
     c =
       "relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:max-w-3xl"
-    c = c + " px-4 pt-5 pb-4 sm:p-6" if frame?
-    c = c + " p-2" if !frame?
+    c = c + " px-4 pt-5 pb-4 sm:p-6" if padding?
+    c = c + " p-2" if !padding?
     c
   end
 

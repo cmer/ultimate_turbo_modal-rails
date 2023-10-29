@@ -24,7 +24,7 @@
 
     <%= tag.div(id: "modal-outer", class: "fixed inset-0 z-10 overflow-y-auto", data: { modal_target: "modal" }) do %>
       <%= tag.div(id: "modal-inner", class: "flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0", data: { modal_target: "innerModal" }) do %>
-        <%= tag.div(id: "modal-padding", class: frame_classes) do %>
+        <%= tag.div(id: "modal-padding", class: padding_classes) do %>
 
           <% if close_button? %>
             <div class="absolute top-3 right-3">
