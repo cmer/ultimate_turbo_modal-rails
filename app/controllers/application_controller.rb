@@ -1,8 +1,5 @@
 class ApplicationController < ActionController::Base
-  def inside_modal?
-    request.headers["Turbo-Frame"] == "modal"
-  end
-  helper_method :inside_modal?
+  include TurboModal::Controller
 
   def set_modal_properties
     @frame = !(params[:frame] == "0")

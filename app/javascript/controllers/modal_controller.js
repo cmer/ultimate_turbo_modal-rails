@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { Turbo } from "@hotwired/turbo-rails"
 import { enter, leave } from "el-transition"
 
 export default class extends Controller {
@@ -15,6 +16,12 @@ export default class extends Controller {
     window.addEventListener('popstate', function (event) {
       if (_this.#hasHistoryAdvanced()) _this.#resetModalElement()
     })
+
+    window.modal = this
+  }
+
+  disconnect() {
+    window.modal = undefined
   }
 
   showModal() {
@@ -47,6 +54,10 @@ export default class extends Controller {
 
     if (this.#hasHistoryAdvanced())
       history.back()
+  }
+
+  hide() {
+    this.hideModal()
   }
 
   // hide modal on successful form submission
@@ -95,4 +106,11 @@ export default class extends Controller {
   #unlockBodyScroll() {
     document.body.style.overflow = "auto"
   }
+}
+
+Turbo.StreamActions.modal = function () {
+  const message = this.getAttribute("message")
+
+  if (message == "hide") window.modal?.hide()
+  if (message == "close") window.modal?.hide()
 }
