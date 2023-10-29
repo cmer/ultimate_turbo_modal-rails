@@ -2,7 +2,7 @@
 
 There are MANY Turbo/Hotwire/Stimulus modal dialog implementations out there, and it seems like everyone goes about it a different way. However, as you may have learned the hard way, the majority fall short in different, often subtle ways. They generally cover the basics quite well, but do not check all the boxes for real-world use.
 
-UTMR uses [Tailwind CSS](https://tailwindcss.com), [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [Morphdom](https://github.com/patrick-steele-idem/morphdom) and [el-transition](https://github.com/mmccall10/el-transition).
+UTMR uses [Tailwind CSS](https://tailwindcss.com), [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [Idiomorph](https://github.com/bigskysoftware/idiomorph) and [el-transition](https://github.com/mmccall10/el-transition).
 
 I believe UTMR is the best implementation and checks all the boxes. It is featureful, yet extremely easy to use.
 
@@ -83,16 +83,17 @@ document.addEventListener("turbo:frame-missing", function (event) {
   }
 })
 
-// Morphdom Turbo Frame rendering to allow navigation within Turbo Frames
+// Morph Turbo Frame rendering to allow navigation within Turbo Frames
 // without having to teardown the entire frame. This is needed to prevent
 // the leaving and entering animations from repeating when navigating
 // within the modal. You could optionally not use the code below if you
 // do not intend to allow navigation within the modal.
+//
+// Note that Turbo 8 will include Idiomorph by default.
 addEventListener("turbo:before-frame-render", (event) => {
   event.detail.render = (currentElement, newElement) => {
-    morphdom(currentElement, newElement, {
-      childrenOnly: true,
-      onBeforeElUpdated: (fromEl, toEl) => !fromEl.isEqualNode(toEl)
+     Idiomorph.morph(currentElement, newElement, {
+      morphstyle: 'innerHTML'
     })
   }
 })
