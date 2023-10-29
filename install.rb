@@ -5,11 +5,11 @@ def js_dependencies_commands
 
   case js_bundler
   when :yarn
-    commands << "yarn add el-transition morphdom"
+    commands << "yarn add el-transition"
   when :npm
-    commands << "npm install el-transition morphdom"
+    commands << "npm install el-transition"
   when :importmap
-    commands << "bin/importmap pin el-transition morphdom"
+    commands << "bin/importmap pin el-transition"
   end
 
   commands
