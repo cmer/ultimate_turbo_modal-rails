@@ -6,7 +6,8 @@ window.Turbo = Turbo;
 
 // Handle frame-missing events gracefully for redirects, like in Turbo 7.2
 document.addEventListener("turbo:frame-missing", function (event) {
-  if (event.detail.response.redirected) {
+  if (event.detail.response.redirected &&
+    event.target == document.querySelector("turbo-frame#modal")) {
     event.preventDefault()
     event.detail.visit(event.detail.response)
   }
