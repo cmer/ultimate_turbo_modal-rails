@@ -4,10 +4,19 @@
   <%= link_to "Open Modal (advance history)", post_path(@post, advance: "1"), class: button_classes, data: {turbo_frame: "modal"} %>
   <%= link_to "Open Modal (no frame)", modal_path(:photo, frame: 0, advance: 1), class: button_classes, data: {turbo_frame: "modal"} %>
   <%= link_to "Open Scrolling Modal", modal_path(:long, advance: 1), class: button_classes, data: {turbo_frame: "modal"} %>
+  <%= link_to "Close From Backend", new_hide_from_backend_path, class: button_classes, data: {turbo_frame: "modal"} %>
 </div>
 
-<div class="mt-8 space-y-2 text-gray-300">
-  <% 30.times do %>
-    <p><%= @@lorem ||= Faker::Lorem.paragraph(sentence_count: 50) %></p>
-  <% end %>
+<div class="my-10 font-medium text-lg">
+  Rendered at <%= Time.now %>
 </div>
+
+<%= render partial: "hide_from_backends/notice" %>
+
+<div class="my-8 space-y-2 text-gray-300">
+  <% 30.times do %>
+    <p><%= @@lorem ||= Faker::Lorem.paragraph(sentence_count: 20) %></p>
+  <% end %>
+
+</div>
+<div class="my-8"><%= link_to "Open Modal", post_path(@post), class: button_classes, data: {turbo_frame: "modal"} %></div>
