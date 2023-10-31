@@ -1,0 +1,3 @@
+module UltimateTurboModal
+  VERSION: String
+end

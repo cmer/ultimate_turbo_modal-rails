@@ -2,28 +2,28 @@
 
 There are MANY Turbo/Hotwire/Stimulus modal dialog implementations out there, and it seems like everyone goes about it a different way. However, as you may have learned the hard way, the majority fall short in different, often subtle ways. They generally cover the basics quite well, but do not check all the boxes for real-world use.
 
-UTMR uses [Tailwind CSS](https://tailwindcss.com), [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [Idiomorph](https://github.com/bigskysoftware/idiomorph) and [el-transition](https://github.com/mmccall10/el-transition).
+UTMR aims to be the be-all and end-all of Turbo Modals. I believe it is the best implementation and checks all the boxes. It is feature-rich, yet extremely easy to use.
 
-I believe UTMR is the best implementation and checks all the boxes. It is featureful, yet extremely easy to use.
+Under the hood, it uses [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [el-transition](https://github.com/mmccall10/el-transition), and optionally [Idiomorph](https://github.com/bigskysoftware/idiomorph).
 
-![The Unicat](./public/unicat-sm.jpg "The Unicat")
+It currently ships in a single flavor: Tailwind CSS. It is easy to create your own to suit your needs such as vanilla CSS or any other CSS framework you may prefer. See `lib/ultimate_turbo_modal/flavors/tailwind.rb` for the Tailwind code.
 
 
 &nbsp;
 &nbsp;
-# Features and capabilities
+## Features and capabilities
 
 - Extremely easy to use
 - Fully responsive
 - Does not break if a user navigates directly to a page that is usually shown in a modal
 - Opening a modal in a new browser tab (ie: right click) gracefully degrades without having to code a modal and non-modal version of the same page
 - Automatically handles URL history (ie: pushState) for shareable URLs
-- pushState URL optionally overridable
+- pushState URL optionally overrideable
 - Seamless support for multi-page navigation within the modal
 - Seamless support for forms with validations
 - Seamless support for Rails flash messages
 - Enter/leave animation (fade in/out)
-- Support for long modals (scrollable)
+- Support for long, scrollable modals
 - Properly locks the background page when scrolling a long modal
 - Click outside the modal to dismiss
 - Keyboard control; ESC to dismiss
@@ -32,113 +32,58 @@ I believe UTMR is the best implementation and checks all the boxes. It is featur
 
 &nbsp;
 &nbsp;
-# Playing with the demo
+## Demo
 
-```sh
-bin/rails db:create db:migrate db:seed
-bin/dev
-open http://localhost:3000
-```
+A demo application can be found at https://github.com/cmer/ultimate_turbo_modal-demo. A video demo can be seen here: [https://youtu.be/eG5uWTH74NA](https://youtu.be/eG5uWTH74NA)
+
 
 &nbsp;
 &nbsp;
-# Video demo
+## Installation
 
-[https://youtu.be/eG5uWTH74NA](https://youtu.be/eG5uWTH74NA)
+1. Install the gem and add to the application's Gemfile by executing:
 
-&nbsp;
-&nbsp;
-# Installation inside your own Rails app
+    $ bundle add ultimate_turbo_modal
 
-There are a few simple steps involved in getting up and running.
+2. Install the npm package:
 
-&nbsp;
-&nbsp;
-## Run the installation script
+    $ yarn add ultimate_turbo_modal
 
-First, start by running the installation script. You'll be prompted before each step so you know exactly what's going on.
+    - or -
 
-```sh
-# Replace path with your own application's Rails root
-ruby ./install.rb ~/code/my_project_path
-```
-
-PS: If you wish, please review [`install.rb`](https://github.com/cmer/ultimate-turbo-modal/blob/main/install.rb); it's quite easy to follow what it does.
-
-&nbsp;
-&nbsp;
-## And a few simple manual steps...
-
-There are a few things you should do manually:
-
-1. Add `app/components` to your Tailwind `content` block. The file is at [`config/tailwind.config.js`](https://github.com/cmer/ultimate-turbo-modal/blob/main/config/tailwind.config.js).
-2. Add the following code to your Javascript entrypoint. For example, [`javascript/application.js`](https://github.com/cmer/ultimate-turbo-modal/blob/main/app/javascript/application.js):
-
-```javascript
-// Handle frame-missing events gracefully for redirects, like in Turbo 7.2
-document.addEventListener("turbo:frame-missing", function (event) {
-  if (event.detail.response.redirected && event.target == document.querySelector("turbo-frame#modal")) {
-    event.preventDefault()
-    event.detail.visit(event.detail.response)
-  } else {
-    super(event)
-  }
-})
-
-// Morph Turbo Frame rendering to allow navigation within Turbo Frames
-// without having to teardown the entire frame. This is needed to prevent
-// the leaving and entering animations from repeating when navigating
-// within the modal. You could optionally not use the code below if you
-// do not intend to allow navigation within the modal.
-//
-// Note that Turbo 8 will include Idiomorph by default.
-//
-// In the meantime, add `<script src="https://unpkg.com/idiomorph"></script>`
-// to your HTML <head>.
-addEventListener("turbo:before-frame-render", (event) => {
-  event.detail.render = (currentElement, newElement) => {
-     Idiomorph.morph(currentElement, newElement, {
-      morphstyle: 'innerHTML'
-    })
-  }
-})
-```
+    $ bin/rails importmaps pin ultimate_turbo_modal
 
 3. Add the following as the first element in the `body` tag of `views/layouts/application.html.erb`:
 
 ```erb
 <%= turbo_frame_tag "modal" %>
+``````
+
+4. Register the Stimulus controller in `app/javascript/controllers/index.js` adding the following lines at the end.
+
+```js
+import setupUltimateTurboModal from "ultimate_turbo_modal";
+setupUltimateTurboModal(application);
 ```
 
-4. A new Stimulus controller named `modal_controller.js` was copied to `app/javascript/controllers`. Make sure your application registers it. This should be done by default.
-
-5. There's no step 5.
+5. Optionally (but recommended), configure UTMR to use Idiomorph. See below for details.
 
 &nbsp;
 &nbsp;
-# Usage
+## Usage
 
-To start, I recommend you look at some examples, such as:
-
-- [`app/views/modal/show.html.erb`](https://github.com/cmer/ultimate-turbo-modal/blob/main/app/views/modal/show.html.erb)
-- [`app/views/posts/new.html.erb`](https://github.com/cmer/ultimate-turbo-modal/blob/main/app/views/posts/new.html.erb)
-- [`app/views/posts/show.html.erb`](https://github.com/cmer/ultimate-turbo-modal/blob/main/app/views/posts/show.html.erb)
-- [`app/views/posts/edit.html.erb`](https://github.com/cmer/ultimate-turbo-modal/blob/main/app/views/posts/edit.html.erb)
-
-In a nutshell, there are two simple steps to get going.
-
-1. Wrap your view inside a block as follow:
+1. Wrap your view inside a `modal` block as follow:
 
 ```erb
-<%= render UI::Modal::Component.new do %>
+<%= modal do %>
   Hello World!
 <% end %>
 ```
 
-2. Link to your view by specifying a target Turbo Frame:
+2. Link to your view by specifying `modal` as the target Turbo Frame:
 
 ```erb
-<%= link_to "Open Modal", post_path(@post), data: { turbo_frame: "modal" } %>
+<%= link_to "Open Modal", "/hello_world", data: { turbo_frame: "modal" } %>
 ```
 
 Clicking on the link will automatically open the content of the view inside a modal. If you open the link in a new tab, it will render normally outside of the modal. Nothing to do!
@@ -155,21 +100,21 @@ If you need to do something a little bit more advanced when the view is shown ou
 
 &nbsp;
 &nbsp;
-# Options
+## Options
 
-## `frame`, default: `true`
+### `padding`, default: `true`
 
-Adds padding and a close button inside the modal. The close button can optionally be hidden.
+Adds padding inside the modal.
 
-## `close_button`, default: `true`
+### `close_button`, default: `true`
 
-Shows or hide a close button (X) at the top right of the modal. This option has no effect if `frame` is `false`.
+Shows or hide a close button (X) at the top right of the modal.
 
-## `advance_history`, default: `true`
+### `advance_history`, default: `true`
 
 When opening the modal, the URL in the URL bar will change to the URL of the view being shown in the modal. The Back button dismisses the modal and navigates back.
 
-## `advance_history_url`, default: `nil`
+### `advance_history_url`, default: `nil`
 
 Override for the URL being shown in the URL bar when `advance_history` is enabled. Default is the actual URL.
 
@@ -177,7 +122,40 @@ Override for the URL being shown in the URL bar when `advance_history` is enable
 ### Example usage with options
 
 ```erb
-<%= render UI::Modal::Component.new(frame: true, close_button: false, advance_history_url: "/foo/bar") do %>
+<%= modal(padding: true, close_button: false, advance_history_url: "/foo/bar") do %>
   Hello World!
 <% end %>
 ```
+
+## Installing & Configuring Idiomorph
+
+// Morph Turbo Frame rendering to allow navigation within Turbo Frames
+// without having to teardown the entire frame. This is needed to prevent
+// the leaving and entering animations from repeating when navigating
+// within the modal. You could optionally not use the code below if you
+// do not intend to allow navigation within the modal.
+//
+// Note that Turbo 8 will include Idiomorph by default.
+//
+// In the meantime, add `<script src="https://unpkg.com/idiomorph"></script>`
+// to your HTML <head>.
+addEventListener("turbo:before-frame-render", (event) => {
+  event.detail.render = (currentElement, newElement) => {
+    Idiomorph.morph(currentElement, newElement, {
+      morphstyle: 'innerHTML'
+    })
+  }
+})
+
+
+&nbsp;
+&nbsp;
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/cmer/ultimate_turbo_modal.
+
+&nbsp;
+&nbsp;
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
