@@ -9,14 +9,14 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   # @param padding [Boolean] Whether to add padding around the modal content
   # @param close_button [Boolean] Whether to show a close button.
-  # @param advance_history [Boolean] Whether to update the browser history when opening and closing the modal
-  # @param advance_history_url [String] Override the URL to use when advancing the history
+  # @param advance [Boolean] Whether to update the browser history when opening and closing the modal
+  # @param advance_url [String] Override the URL to use when advancing the history
   # @param request [ActionDispatch::Request] The current Rails request object
-  def initialize(padding: true, close_button: true, advance_history: true, advance_history_url: nil, request: nil)
+  def initialize(padding: true, close_button: true, advance: true, request: nil)
     @padding = padding
     @close_button = close_button
-    @advance_history = advance_history
-    @advance_history_url = advance_history_url
+    @advance = advance
+    @advance_url = advance if advance && advance.is_a?(String)
     @request = request
 
     self.class.include Turbo::FramesHelper
@@ -46,8 +46,8 @@ class UltimateTurboModal::Base < Phlex::HTML
     !!@padding
   end
 
-  def advance_history?
-    !!@advance_history
+  def advance?
+    !!@advance
   end
 
   def close_button?
@@ -66,9 +66,9 @@ class UltimateTurboModal::Base < Phlex::HTML
     turbo_stream? || turbo_frame?
   end
 
-  def advance_history_url
-    return nil unless advance_history?
-    @advance_history_url || request.original_url
+  def advance_url
+    return nil unless advance?
+    @advance_url || request.original_url
   end
 
   def method_missing(method, *, &block)

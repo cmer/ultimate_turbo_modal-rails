@@ -27,7 +27,7 @@ module UltimateTurboModal::Flavors
         data: {
           controller: "modal",
           modal_target: "container",
-          modal_advance_history_url_value: advance_history_url,
+          modal_advance_url_value: advance_url,
           action: "turbo:submit-end->modal#submitEnd keyup@window->modal#closeWithKeyboard click@window->modal#outsideModalClicked click->modal#outsideModalClicked",
           transition_enter: "ease-out duration-300",
           transition_enter_start: "opacity-0",

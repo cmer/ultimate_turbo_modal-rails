@@ -110,19 +110,23 @@ Adds padding inside the modal.
 
 Shows or hide a close button (X) at the top right of the modal.
 
-### `advance_history`, default: `true`
+### `advance`, default: `true`
 
 When opening the modal, the URL in the URL bar will change to the URL of the view being shown in the modal. The Back button dismisses the modal and navigates back.
 
-### `advance_history_url`, default: `nil`
-
-Override for the URL being shown in the URL bar when `advance_history` is enabled. Default is the actual URL.
+If a URL is specified as a String, the browser history will advance, and the URL shown in the URL bad will be replaced by the URL specified.
 
 
 ### Example usage with options
 
 ```erb
-<%= modal(padding: true, close_button: false, advance_history_url: "/foo/bar") do %>
+<%= modal(padding: true, close_button: false, advance: false) do %>
+  Hello World!
+<% end %>
+```
+
+```erb
+<%= modal(padding: true, close_button: false, advance: "/foo/bar") do %>
   Hello World!
 <% end %>
 ```
