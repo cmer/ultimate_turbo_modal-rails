@@ -51,7 +51,7 @@ A demo application can be found at https://github.com/cmer/ultimate_turbo_modal-
 
     - or -
 
-    $ bin/rails importmaps pin ultimate_turbo_modal
+    $ bin/importmap pin ultimate_turbo_modal
 
 3. Add the following as the first element in the `body` tag of `views/layouts/application.html.erb`:
 
