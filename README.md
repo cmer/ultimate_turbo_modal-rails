@@ -129,16 +129,19 @@ Override for the URL being shown in the URL bar when `advance_history` is enable
 
 ## Installing & Configuring Idiomorph
 
-// Morph Turbo Frame rendering to allow navigation within Turbo Frames
-// without having to teardown the entire frame. This is needed to prevent
-// the leaving and entering animations from repeating when navigating
-// within the modal. You could optionally not use the code below if you
-// do not intend to allow navigation within the modal.
-//
-// Note that Turbo 8 will include Idiomorph by default.
-//
-// In the meantime, add `<script src="https://unpkg.com/idiomorph"></script>`
-// to your HTML <head>.
+Idiomorph can morph Turbo Frame responses to allow seemless navigation within Turbo Frames
+without having to hide and reopen the modal. This is needed to prevent
+the fade out / fade in animations from repeating when navigating within the modal.
+
+You could optionally not use the code below if you do not intend to allow navigation within the modal.
+
+Note that Turbo 8 will include Idiomorph by default.
+
+In the meantime, add `<script src="https://unpkg.com/idiomorph"></script>` to your HTML <head>.
+
+And the following code to `application.js`:
+
+```js
 addEventListener("turbo:before-frame-render", (event) => {
   event.detail.render = (currentElement, newElement) => {
     Idiomorph.morph(currentElement, newElement, {
@@ -146,6 +149,7 @@ addEventListener("turbo:before-frame-render", (event) => {
     })
   }
 })
+```
 
 
 &nbsp;
