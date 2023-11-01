@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.email = ["foss@carlmercier.com"]
 
   spec.summary = "UTMR aims to be the be-all and end-all of Turbo Modals."
-  spec.description = "An easy-to-use, flexible, and powerful Turbo Modal solution for Rails 7+ built with Stimulus.js, Tailwind CSS and Hotwire."
+  spec.description = "An easy-to-use, flexible, and powerful Turbo Modal solution for Rails 7+ built with Stimulus.js, Tailwind CSS (or vanilla CSS) and Hotwire."
   spec.homepage = "https://github.com/cmer/ultimate_turbo_modal"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0"

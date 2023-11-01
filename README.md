@@ -6,7 +6,7 @@ UTMR aims to be the be-all and end-all of Turbo Modals. I believe it is the best
 
 Under the hood, it uses [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [el-transition](https://github.com/mmccall10/el-transition), and optionally [Idiomorph](https://github.com/bigskysoftware/idiomorph).
 
-It currently ships in a single flavor: Tailwind CSS. It is easy to create your own to suit your needs such as vanilla CSS or any other CSS framework you may prefer. See `lib/ultimate_turbo_modal/flavors/tailwind.rb` for the Tailwind code.
+It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It is easy to create your own to suit your needs such as vanilla CSS or any other CSS framework you may prefer. See `lib/ultimate_turbo_modal/flavors/vanilla.rb` for an example code.
 
 
 &nbsp;
@@ -59,14 +59,20 @@ A demo application can be found at https://github.com/cmer/ultimate_turbo_modal-
 <%= turbo_frame_tag "modal" %>
 ``````
 
-4. Register the Stimulus controller in `app/javascript/controllers/index.js` adding the following lines at the end.
+4. Set your desired flavor at `app/config/initializers/modal.rb`. The default is `:tailwind`.
+
+```ruby
+UltimateTurboModal.flavor = :tailwind # or :vanilla
+```
+
+5. Register the Stimulus controller in `app/javascript/controllers/index.js` adding the following lines at the end.
 
 ```js
 import setupUltimateTurboModal from "ultimate_turbo_modal";
 setupUltimateTurboModal(application);
 ```
 
-5. Optionally (but recommended), configure UTMR to use Idiomorph. See below for details.
+6. Optionally (but recommended), configure UTMR to use Idiomorph. See below for details.
 
 &nbsp;
 &nbsp;
