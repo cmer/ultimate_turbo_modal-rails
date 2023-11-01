@@ -34,7 +34,7 @@ It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It 
 &nbsp;
 ## Demo
 
-A demo application can be found at https://github.com/cmer/ultimate_turbo_modal-demo. A video demo can be seen here: [https://youtu.be/eG5uWTH74NA](https://youtu.be/eG5uWTH74NA)
+A demo application can be found at https://github.com/cmer/ultimate_turbo_modal-demo. A video demo can be seen here: [https://youtu.be/BVRDXLN1I78](https://youtu.be/BVRDXLN1I78).
 
 
 &nbsp;
