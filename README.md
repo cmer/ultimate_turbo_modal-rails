@@ -6,7 +6,7 @@ UTMR aims to be the be-all and end-all of Turbo Modals. I believe it is the best
 
 Under the hood, it uses [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [el-transition](https://github.com/mmccall10/el-transition), and optionally [Idiomorph](https://github.com/bigskysoftware/idiomorph).
 
-It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It is easy to create your own to suit your needs such as vanilla CSS or any other CSS framework you may prefer. See `lib/ultimate_turbo_modal/flavors/vanilla.rb` for an example code.
+It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It is easy to create your own variant to suit your needs. See `lib/ultimate_turbo_modal/flavors/vanilla.rb` for an example code.
 
 
 &nbsp;
@@ -59,10 +59,15 @@ A demo application can be found at https://github.com/cmer/ultimate_turbo_modal-
 <%= turbo_frame_tag "modal" %>
 ``````
 
-4. Set your desired flavor at `app/config/initializers/modal.rb`. The default is `:tailwind`.
+4. Set your desired flavor and default configuration at `app/config/initializers/ultimate_turbo_modal.rb`.
 
 ```ruby
-UltimateTurboModal.flavor = :tailwind # or :vanilla
+UltimateTurboModal.configure do |config|
+  config.flavor = :tailwind
+  config.padding = true
+  config.advance = true
+  config.close_button = true
+end
 ```
 
 5. Register the Stimulus controller in `app/javascript/controllers/index.js` adding the following lines at the end.
@@ -72,7 +77,33 @@ import setupUltimateTurboModal from "ultimate_turbo_modal";
 setupUltimateTurboModal(application);
 ```
 
-6. Optionally (but recommended), configure UTMR to use Idiomorph. See below for details.
+6. If using the Tailwind flavor, add the following to `tailwind.config.js`:
+
+```
+// For npm/yarn
+const { getUltimateTurboModalPath } = require('ultimate_turbo_modal/gemPath');
+
+// If using Importmaps, use the following instead:
+// const { execSync } = require('child_process');
+//
+// function getUltimateTurboModalPath() {
+//  const path = execSync('bundle show ultimate_turbo_modal').toString().trim();
+//  return `${path}/**/*.{erb,html,rb}`;
+//}
+```
+
+and then in the `content` section, add `getUltimateTurboModalPath()` as follow:
+
+```
+  content: [
+    './public/*.html',
+    './app/helpers/**/*.rb',
+    './app/javascript/**/*.js',
+    './app/views/**/*.{erb,haml,html,slim,rb}',
+    getUltimateTurboModalPath()
+```
+
+7. Optionally (but recommended), configure UTMR to use Idiomorph. See below for details.
 
 &nbsp;
 &nbsp;
