@@ -1,19 +1,28 @@
 class UltimateTurboModal::Base < Phlex::HTML
+  include Phlex::DeferredRender
+
   # @param padding [Boolean] Whether to add padding around the modal content
   # @param close_button [Boolean] Whether to show a close button.
   # @param advance [Boolean] Whether to update the browser history when opening and closing the modal
-  # @param advance_url [String] Override the URL to use when advancing the history
+  # @param header_divider [Boolean] Whether to show a divider between the header and the main content
+  # @param footer_divider [Boolean] Whether to show a divider between the main content and the footer
+  # @param title [String] The title of the modal
   # @param request [ActionDispatch::Request] The current Rails request object
   def initialize(
     padding: UltimateTurboModal.configuration.padding,
     close_button: UltimateTurboModal.configuration.close_button,
     advance: UltimateTurboModal.configuration.advance,
-    request: nil
+    header_divider: UltimateTurboModal.configuration.header_divider,
+    footer_divider: UltimateTurboModal.configuration.footer_divider,
+    title: nil, request: nil
   )
     @padding = padding
     @close_button = close_button
     @advance = !!advance
     @advance_url = advance if advance.present? && advance.is_a?(String)
+    @title = title
+    @header_divider = header_divider
+    @footer_divider = footer_divider
     @request = request
 
     unless self.class.include?(Turbo::FramesHelper)
@@ -27,10 +36,12 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   def template(&)
     if turbo_frame?
-      turbo_frame_tag("modal") { modal(&) }
+      turbo_frame_tag("modal") do
+        modal(&)
+      end
     elsif turbo_stream?
       Turbo::StreamsHelper.turbo_stream_action_tag("update", target: "modal") do
-        template { modal(&) }
+        modal(&)
       end
     else
       modal(&)
@@ -39,41 +50,31 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   private
 
-  attr_accessor :request
+  attr_accessor :request, :title
 
-  def padding?
-    !!@padding
-  end
+  def padding? = !!@padding
 
-  def advance?
-    !!@advance
-  end
+  def advance? = !!@advance
 
-  def close_button?
-    !!@close_button
-  end
+  def close_button? = !!@close_button
 
-  def turbo_stream?
-    !!request&.format&.turbo_stream?
-  end
+  def title? = !!@title
 
-  def turbo_frame?
-    !!request&.headers&.key?("Turbo-Frame")
-  end
+  def footer? = !!@footer
 
-  def turbo?
-    turbo_stream? || turbo_frame?
-  end
+  def header_divider? = !!@dividers && title?
+
+  def footer_divider? = !!@dividers && footer?
+
+  def turbo_stream? = !!request&.format&.turbo_stream?
+
+  def turbo_frame? = !!request&.headers&.key?("Turbo-Frame")
+
+  def turbo? = turbo_stream? || turbo_frame?
 
   def advance_url
     return nil unless advance?
     @advance_url || request.original_url
-  end
-
-  def include_if_defined(mod_str)
-    if defined?(mod.constantize) && !self.class.included_modules.include?(mod.constantize)
-      self.class.include mod.constantize
-    end
   end
 
   def respond_to_missing?(method, include_private = false)

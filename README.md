@@ -67,6 +67,8 @@ UltimateTurboModal.configure do |config|
   config.padding = true
   config.advance = true
   config.close_button = true
+  config.header_divider = true
+  config.footer_divider = true
 end
 ```
 
@@ -152,6 +154,19 @@ Shows or hide a close button (X) at the top right of the modal.
 When opening the modal, the URL in the URL bar will change to the URL of the view being shown in the modal. The Back button dismisses the modal and navigates back.
 
 If a URL is specified as a String, the browser history will advance, and the URL shown in the URL bad will be replaced by the URL specified.
+
+### `title`, default: `nil`
+
+Title to display in the modal header.
+
+### `header_divider`, default: `true`
+
+Whether to display a divider below the title. The divider will not appear if no title is provided.
+
+### `footer_divider`, default: `true`
+
+Whether to display a divider above the footer. The divider will not appear if no footer was specified.
+
 
 
 ### Example usage with options
