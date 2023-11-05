@@ -7,19 +7,20 @@ module UltimateTurboModal::Flavors
     private
 
     def modal(&)
+      outer_divs do
+        div_content do
+          div_header
+          div_main(&)
+          div_footer if footer?
+        end
+      end
+    end
+
+    def outer_divs(&)
       div_dialog do
         div_overlay
         div_outer do
-          div_inner do
-            div_content do
-              div_header do
-                div_title
-                button_close
-              end
-              div_main(&)
-              div_footer if footer?
-            end
-          end
+          div_inner(&)
         end
       end
     end
@@ -92,8 +93,10 @@ module UltimateTurboModal::Flavors
 
     def div_header(&)
       div(id: "modal-header",
-        class: "flex justify-between items-center py-4 rounded-t dark:border-gray-600 group-data-[header-divider=true]:border-b",
-        &)
+        class: "flex justify-between items-center py-4 rounded-t dark:border-gray-600 group-data-[header-divider=true]:border-b") do
+          div_title
+          button_close
+      end
     end
 
     def div_title
@@ -104,7 +107,9 @@ module UltimateTurboModal::Flavors
 
     def div_footer
       div(id: "modal-footer",
-        class: "flex justify-end items-center py-4 rounded-b dark:border-gray-600 group-data-[footer-divider=true]:border-t")
+        class: "flex justify-end items-center py-4 rounded-b dark:border-gray-600 group-data-[footer-divider=true]:border-t") do
+          render @footer
+      end
     end
 
     def button_close

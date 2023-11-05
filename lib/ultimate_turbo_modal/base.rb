@@ -1,6 +1,4 @@
 class UltimateTurboModal::Base < Phlex::HTML
-  include Phlex::DeferredRender
-
   # @param padding [Boolean] Whether to add padding around the modal content
   # @param close_button [Boolean] Whether to show a close button.
   # @param advance [Boolean] Whether to update the browser history when opening and closing the modal
@@ -54,8 +52,6 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   def padding? = !!@padding
 
-  def advance? = !!@advance
-
   def close_button? = !!@close_button
 
   def title? = !!@title
@@ -72,9 +68,11 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   def turbo? = turbo_stream? || turbo_frame?
 
+  def advance? = !!@advance && !!@advance_url
+
   def advance_url
-    return nil unless advance?
-    @advance_url || request.original_url
+    return nil unless !!@advance
+    @advance_url || request&.original_url
   end
 
   def respond_to_missing?(method, include_private = false)
