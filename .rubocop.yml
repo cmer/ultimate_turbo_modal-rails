@@ -1,4 +1,5 @@
-ruby_version: 3.2
+AllCops:
+  TargetRubyVersion: 3.2
 
 require:
   - standard
