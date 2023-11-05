@@ -54,37 +54,24 @@ module UltimateTurboModal::Flavors
 
     def div_overlay
       div(id: "modal-overlay",
-        class: "fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity dark:bg-opacity-80 z-40",
-        data: {
-          modal_target: "overlay",
-          action: "click->modal#outsideModalClicked"
-        })
+        class: "fixed inset-0 bg-gray-900 bg-opacity-50 transition-opacity dark:bg-opacity-80 z-40")
     end
 
     def div_outer(&)
       div(id: "modal-outer",
-        class: "fixed inset-0 z-50 overflow-y-auto sm:max-w-[80%] md:max-w-3xl sm:mx-auto m-4",
-        data: {
-          modal_target: "modal"
-        }, &)
+        class: "fixed inset-0 z-50 overflow-y-auto sm:max-w-[80%] md:max-w-3xl sm:mx-auto m-4", &)
     end
 
     def div_inner(&)
       div(id: "modal-inner",
-        class: "flex min-h-full items-center justify-center p-1 sm:p-4",
-        data: {
-          modal_target: "innerModal"
-        }, &)
+        class: "flex min-h-full items-center justify-center p-1 sm:p-4", &)
     end
 
     def div_content(&)
       div(id: "modal-content",
         class: "relative transform overflow-hidden rounded-lg bg-white text-left shadow transition-all
                 sm:my-8 sm:max-w-3xl dark:bg-gray-800",
-        data: {
-          modal_target: "content"
-        },
-      &)
+        data: {modal_target: "content"}, &)
     end
 
     def div_main(&)
@@ -92,10 +79,9 @@ module UltimateTurboModal::Flavors
     end
 
     def div_header(&)
-      div(id: "modal-header",
-        class: "flex justify-between items-center py-4 rounded-t dark:border-gray-600 group-data-[header-divider=true]:border-b") do
-          div_title
-          button_close
+      div(id: "modal-header", class: "flex justify-between items-center py-4 rounded-t dark:border-gray-600 group-data-[header-divider=true]:border-b") do
+        div_title
+        button_close
       end
     end
 
@@ -106,24 +92,28 @@ module UltimateTurboModal::Flavors
     end
 
     def div_footer
-      div(id: "modal-footer",
-        class: "flex justify-end items-center py-4 rounded-b dark:border-gray-600 group-data-[footer-divider=true]:border-t") do
-          render @footer
+      div(id: "modal-footer", class: "flex p-4 rounded-b dark:border-gray-600 border-t") do
+        render @footer
       end
     end
 
     def button_close
-      div(class: "mr-4") do
-        button(type: "button",
-          aria: {label: "close"},
-          class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 mt-1.5 mr-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white",
-          data: {
-            action: "modal#hideModal"
-          }) do
-            icon_close
-            span(class: "sr-only") { "Close modal" }
-          end
+      div(id: "modal-close", class: "mr-4") do
+        close_button_tag do
+          icon_close
+          span(class: "sr-only") { "Close modal" }
+        end
       end
+    end
+
+    def close_button_tag(&)
+      button(type: "button",
+        aria: {label: "close"},
+        class: "text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm
+                p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white",
+        data: {
+          action: "modal#hideModal"
+        }, &)
     end
 
     def icon_close

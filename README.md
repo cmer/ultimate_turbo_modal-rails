@@ -207,6 +207,11 @@ addEventListener("turbo:before-frame-render", (event) => {
 })
 ```
 
+&nbsp;
+&nbsp;
+## Thanks
+
+Thanks to @joeldrapper and @KonnorRogers for all the help!
 
 &nbsp;
 &nbsp;

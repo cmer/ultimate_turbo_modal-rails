@@ -86,7 +86,7 @@ module UltimateTurboModal::Flavors
         fill: "none",
         viewbox: "0 0 24 24",
         stroke_width: "1.5",
-        stroke: "currentColor",
+        stroke: "currentColor"
       ) do |s|
         s.path(
           stroke_linecap: "round",

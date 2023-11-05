@@ -58,9 +58,9 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   def footer? = !!@footer
 
-  def header_divider? = !!@dividers && title?
+  def header_divider? = !!@header_divider && title?
 
-  def footer_divider? = !!@dividers && footer?
+  def footer_divider? = !!@footer_divider && footer?
 
   def turbo_stream? = !!request&.format&.turbo_stream?
 
