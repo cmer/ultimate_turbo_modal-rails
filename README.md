@@ -75,14 +75,14 @@ end
 
 5. Register the Stimulus controller in `app/javascript/controllers/index.js` adding the following lines at the end.
 
-```js
+```javascript
 import setupUltimateTurboModal from "ultimate_turbo_modal";
 setupUltimateTurboModal(application);
 ```
 
 6. If using the Tailwind flavor, add the following to `tailwind.config.js`:
 
-```
+```javascript
 // For npm/yarn
 const { getUltimateTurboModalPath } = require('ultimate_turbo_modal/gemPath');
 
@@ -97,16 +97,17 @@ const { getUltimateTurboModalPath } = require('ultimate_turbo_modal/gemPath');
 
 and then in the `content` section, add `getUltimateTurboModalPath()` as follow:
 
-```
-  content: [
-    './public/*.html',
-    './app/helpers/**/*.rb',
-    './app/javascript/**/*.js',
-    './app/views/**/*.{erb,haml,html,slim,rb}',
-    getUltimateTurboModalPath()
+```javascript
+content: [
+ './public/*.html',
+ './app/helpers/**/*.rb',
+ './app/javascript/**/*.js',
+ './app/views/**/*.{erb,haml,html,slim,rb}',
+ getUltimateTurboModalPath()
+]
 ```
 
-7. Optionally (but recommended), configure UTMR to use Idiomorph. See below for details.
+1. Optionally (but recommended), configure UTMR to use Idiomorph. See below for details.
 
 &nbsp;
 &nbsp;
@@ -202,7 +203,7 @@ In the meantime, add `<script src="https://unpkg.com/idiomorph"></script>` to yo
 
 And the following code to `application.js`:
 
-```js
+```javascript
 addEventListener("turbo:before-frame-render", (event) => {
   event.detail.render = (currentElement, newElement) => {
     Idiomorph.morph(currentElement, newElement, {
