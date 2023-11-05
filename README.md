@@ -67,6 +67,9 @@ UltimateTurboModal.configure do |config|
   config.padding = true
   config.advance = true
   config.close_button = true
+  config.header = true
+  config.header_divider = true
+  config.footer_divider = true
 end
 ```
 
@@ -153,6 +156,23 @@ When opening the modal, the URL in the URL bar will change to the URL of the vie
 
 If a URL is specified as a String, the browser history will advance, and the URL shown in the URL bad will be replaced by the URL specified.
 
+### `title`, default: `nil`
+
+Title to display in the modal header.
+
+### `header`, default: `true`
+
+Whether to display a modal header.
+
+### `header_divider`, default: `true`
+
+Whether to display a divider below the header.
+
+### `footer_divider`, default: `true`
+
+Whether to display a divider above the footer. The divider will not appear if no footer was specified.
+
+
 
 ### Example usage with options
 
@@ -192,6 +212,11 @@ addEventListener("turbo:before-frame-render", (event) => {
 })
 ```
 
+&nbsp;
+&nbsp;
+## Thanks
+
+Thanks to [@joeldrapper](https://github.com/KonnorRogers) and [@konnorrogers](https://github.com/KonnorRogers) for all the help!
 
 &nbsp;
 &nbsp;

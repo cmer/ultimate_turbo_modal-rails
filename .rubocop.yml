@@ -1,3 +1,6 @@
+AllCops:
+  TargetRubyVersion: 3.2
+
 require:
   - standard
 inherit_gem:
