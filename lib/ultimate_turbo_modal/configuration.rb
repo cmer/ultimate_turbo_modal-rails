@@ -12,13 +12,14 @@ module UltimateTurboModal
     :advance, :advance=, :padding, :padding=, to: :configuration
 
   class Configuration
-    attr_reader :flavor, :close_button, :advance, :padding, :header_divider, :footer_divider
+    attr_reader :flavor, :close_button, :advance, :padding, :header, :header_divider, :footer_divider
 
     def initialize
       @flavor = :tailwind
       @close_button = true
       @advance = true
       @padding = true
+      @header = true
       @header_divider = true
       @footer_divider = true
     end
@@ -44,6 +45,11 @@ module UltimateTurboModal
       else
         raise ArgumentError.new("Value must be a boolean or a String.")
       end
+    end
+
+    def header=(header)
+      raise ArgumentError.new("Value must be a boolean.") unless [true, false].include?(header)
+      @header = header
     end
 
     def header_divider=(header_divider)

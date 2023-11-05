@@ -10,6 +10,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     padding: UltimateTurboModal.configuration.padding,
     close_button: UltimateTurboModal.configuration.close_button,
     advance: UltimateTurboModal.configuration.advance,
+    header: UltimateTurboModal.configuration.header,
     header_divider: UltimateTurboModal.configuration.header_divider,
     footer_divider: UltimateTurboModal.configuration.footer_divider,
     title: nil, request: nil
@@ -19,6 +20,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     @advance = !!advance
     @advance_url = advance if advance.present? && advance.is_a?(String)
     @title = title
+    @header = header
     @header_divider = header_divider
     @footer_divider = footer_divider
     @request = request
@@ -32,18 +34,22 @@ class UltimateTurboModal::Base < Phlex::HTML
     end
   end
 
-  def template(&)
+  def template(&block)
     if turbo_frame?
       turbo_frame_tag("modal") do
-        modal(&)
+        modal(&block)
       end
     elsif turbo_stream?
       Turbo::StreamsHelper.turbo_stream_action_tag("update", target: "modal") do
-        modal(&)
+        modal(&block)
       end
     else
-      modal(&)
+      render block
     end
+  end
+
+  def footer(&block)
+    @footer = block
   end
 
   private
@@ -56,7 +62,9 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   def title? = !!@title
 
-  def footer? = !!@footer
+  def header? = !!@header
+
+  def footer? = @footer.present?
 
   def header_divider? = !!@header_divider && title?
 

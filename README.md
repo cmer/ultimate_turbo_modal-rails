@@ -67,6 +67,7 @@ UltimateTurboModal.configure do |config|
   config.padding = true
   config.advance = true
   config.close_button = true
+  config.header = true
   config.header_divider = true
   config.footer_divider = true
 end
@@ -159,9 +160,13 @@ If a URL is specified as a String, the browser history will advance, and the URL
 
 Title to display in the modal header.
 
+### `header`, default: `true`
+
+Whether to display a modal header.
+
 ### `header_divider`, default: `true`
 
-Whether to display a divider below the title. The divider will not appear if no title is provided.
+Whether to display a divider below the header.
 
 ### `footer_divider`, default: `true`
 
@@ -211,7 +216,7 @@ addEventListener("turbo:before-frame-render", (event) => {
 &nbsp;
 ## Thanks
 
-Thanks to @joeldrapper and @KonnorRogers for all the help!
+Thanks to [@joeldrapper](https://github.com/KonnorRogers) and [@konnorrogers](https://github.com/KonnorRogers) for all the help!
 
 &nbsp;
 &nbsp;

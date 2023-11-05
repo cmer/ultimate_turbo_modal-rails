@@ -1,8 +1,5 @@
 module UltimateTurboModal::Flavors
   class Tailwind < UltimateTurboModal::Base
-    def footer(&block)
-      @footer = block
-    end
 
     private
 
@@ -46,6 +43,7 @@ module UltimateTurboModal::Flavors
           transition_leave_end: "opacity-0",
           padding: padding?.to_s,
           title: title?.to_s,
+          header: header?.to_s,
           close_button: close_button?.to_s,
           header_divider: header_divider?.to_s,
           footer_divider: footer_divider?.to_s
@@ -70,7 +68,7 @@ module UltimateTurboModal::Flavors
     def div_content(&)
       div(id: "modal-content",
         class: "relative transform overflow-hidden rounded-lg bg-white text-left shadow transition-all
-                sm:my-8 sm:max-w-3xl dark:bg-gray-800",
+                sm:my-8 sm:max-w-3xl dark:bg-gray-800 dark:text-white",
         data: {modal_target: "content"}, &)
     end
 
@@ -79,20 +77,20 @@ module UltimateTurboModal::Flavors
     end
 
     def div_header(&)
-      div(id: "modal-header", class: "flex justify-between items-center py-4 rounded-t dark:border-gray-600 group-data-[header-divider=true]:border-b") do
+      div(id: "modal-header", class: "flex justify-between items-center w-full py-4 rounded-t dark:border-gray-600 group-data-[header-divider=true]:border-b group-data-[header=false]:absolute") do
         div_title
         button_close
       end
     end
 
     def div_title
-      div(id: "modal-title", class: "text-lg font-semibold text-gray-900 dark:text-white pl-4") do
-        h3(id: "modal-title-h", class: "group-data-[title=false]:hidden") { @title }
+      div(id: "modal-title", class: "pl-4") do
+        h3(id: "modal-title-h", class: "group-data-[title=false]:hidden text-lg font-semibold text-gray-900 dark:text-white") { @title }
       end
     end
 
     def div_footer
-      div(id: "modal-footer", class: "flex p-4 rounded-b dark:border-gray-600 border-t") do
+      div(id: "modal-footer", class: "flex p-4 rounded-b dark:border-gray-600 group-data-[footer-divider=true]:border-t") do
         render @footer
       end
     end
