@@ -7,7 +7,9 @@ module UltimateTurboModal::Helpers
     end
 
     included do
-      helper_method :inside_modal?
+      if respond_to?(:helper_method)
+        helper_method :inside_modal?
+      end
     end
   end
 end
