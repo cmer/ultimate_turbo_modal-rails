@@ -1,3 +1,7 @@
+## [1.2.1] - 2023-11-11
+
+- Fix footer divider not showing
+
 ## [1.2.0] - 2023-11-05
 
 - Dark mode support

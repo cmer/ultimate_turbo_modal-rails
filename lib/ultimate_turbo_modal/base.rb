@@ -1,4 +1,5 @@
 class UltimateTurboModal::Base < Phlex::HTML
+  prepend Phlex::DeferredRenderWithMainContent
   # @param padding [Boolean] Whether to add padding around the modal content
   # @param close_button [Boolean] Whether to show a close button.
   # @param advance [Boolean] Whether to update the browser history when opening and closing the modal
