@@ -1,3 +1,7 @@
+## [1.3.0] - 2023-11-14
+
+- Added ability to pass in a `title` block.
+
 ## [1.2.1] - 2023-11-11
 
 - Fix footer divider not showing

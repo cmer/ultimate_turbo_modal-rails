@@ -159,7 +159,7 @@ If a URL is specified as a String, the browser history will advance, and the URL
 
 ### `title`, default: `nil`
 
-Title to display in the modal header.
+Title to display in the modal header. Alternatively, you can set the title with a block.
 
 ### `header`, default: `true`
 
@@ -173,8 +173,6 @@ Whether to display a divider below the header.
 
 Whether to display a divider above the footer. The divider will not appear if no footer was specified.
 
-
-
 ### Example usage with options
 
 ```erb
@@ -186,6 +184,24 @@ Whether to display a divider above the footer. The divider will not appear if no
 ```erb
 <%= modal(padding: true, close_button: false, advance: "/foo/bar") do %>
   Hello World!
+<% end %>
+```
+
+### Title and Footer
+
+You can set a custom title and footer by passing a block. For example
+
+```erb
+<%= modal do |m| %>
+  <% m.title do %>
+    <div>My Title</div>
+  <% end %>
+
+  Modal body
+
+  <% m.footer do %>
+    <input type="submit" form="myform">Submit</input>
+  <% end %>
 <% end %>
 ```
 

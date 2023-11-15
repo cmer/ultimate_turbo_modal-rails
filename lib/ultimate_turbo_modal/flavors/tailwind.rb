@@ -76,6 +76,12 @@ module UltimateTurboModal::Flavors
       div(id: "modal-main", class: "group-data-[padding=true]:p-4 group-data-[padding=true]:pt-2", &)
     end
 
+    def header_block
+      return if @header_block.blank?
+      render @header_block
+      nil
+    end
+
     def div_header(&)
       div(id: "modal-header", class: "flex justify-between items-center w-full py-4 rounded-t dark:border-gray-600 group-data-[header-divider=true]:border-b group-data-[header=false]:absolute") do
         div_title
@@ -85,7 +91,11 @@ module UltimateTurboModal::Flavors
 
     def div_title
       div(id: "modal-title", class: "pl-4") do
-        h3(id: "modal-title-h", class: "group-data-[title=false]:hidden text-lg font-semibold text-gray-900 dark:text-white") { @title }
+        if @title_block.present?
+          render @title_block
+        else
+          h3(id: "modal-title-h", class: "group-data-[title=false]:hidden text-lg font-semibold text-gray-900 dark:text-white") { @title }
+        end
       end
     end
 

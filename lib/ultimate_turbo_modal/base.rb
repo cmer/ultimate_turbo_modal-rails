@@ -49,17 +49,23 @@ class UltimateTurboModal::Base < Phlex::HTML
     end
   end
 
+  def title(&block)
+    @title_block = block
+  end
+
   def footer(&block)
     @footer = block
   end
 
   private
 
-  attr_accessor :request, :title
+  attr_accessor :request
 
   def padding? = !!@padding
 
   def close_button? = !!@close_button
+
+  def title_block? = !!@title_block
 
   def title? = !!@title
 
@@ -67,7 +73,7 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   def footer? = @footer.present?
 
-  def header_divider? = !!@header_divider && title?
+  def header_divider? = !!@header_divider && (@title_block || title?)
 
   def footer_divider? = !!@footer_divider && footer?
 

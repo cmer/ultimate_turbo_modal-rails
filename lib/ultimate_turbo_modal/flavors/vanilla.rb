@@ -79,7 +79,11 @@ module UltimateTurboModal::Flavors
 
     def div_title
       div(id: "modal-title", class: "modal-title") do
-        h3(id: "modal-title-h", class: "modal-title-h") { @title }
+        if @title_block.present?
+          render @title_block
+        else
+          h3(id: "modal-title-h", class: "modal-title-h") { @title }
+        end
       end
     end
 
