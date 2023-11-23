@@ -1,3 +1,7 @@
+## [1.3.1] - 2023-11-23
+
+- Bug fixes
+
 ## [1.3.0] - 2023-11-14
 
 - Added ability to pass in a `title` block.
