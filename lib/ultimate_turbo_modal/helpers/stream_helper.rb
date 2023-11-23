@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UltimateTurboModal::Helpers
   module StreamHelper
     def modal(message)

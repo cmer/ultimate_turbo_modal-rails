@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Phlex
   module DeferredRenderWithMainContent
     def template(&)
