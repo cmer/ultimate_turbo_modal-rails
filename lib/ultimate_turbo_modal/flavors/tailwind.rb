@@ -106,7 +106,7 @@ module UltimateTurboModal::Flavors
     end
 
     def button_close
-      div(id: "modal-close", class: "mr-4") do
+      div(id: "modal-close", class: "mr-4 group-data-[close-button=false]:hidden") do
         close_button_tag do
           icon_close
           span(class: "sr-only") { "Close modal" }
