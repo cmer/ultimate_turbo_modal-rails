@@ -1,3 +1,8 @@
+## [1.4.0] - 2023-11-23
+
+- Added ability to specify custom `data-action` for the close button.
+- Code cleanup, deduplication
+
 ## [1.3.1] - 2023-11-23
 
 - Bug fixes

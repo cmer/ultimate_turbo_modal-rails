@@ -3,7 +3,9 @@
 class UltimateTurboModal::Base < Phlex::HTML
   prepend Phlex::DeferredRenderWithMainContent
   # @param padding [Boolean] Whether to add padding around the modal content
-  # @param close_button [Boolean] Whether to show a close button.
+  # @param close_button [Boolean] Whether to show a close button
+  # @param close_button_sr_label [String] Close button label for screen readers
+  # @param close_button_data_action [String] `data-action` attribute for the close button
   # @param advance [Boolean] Whether to update the browser history when opening and closing the modal
   # @param header_divider [Boolean] Whether to show a divider between the header and the main content
   # @param footer_divider [Boolean] Whether to show a divider between the main content and the footer
@@ -12,6 +14,8 @@ class UltimateTurboModal::Base < Phlex::HTML
   def initialize(
     padding: UltimateTurboModal.configuration.padding,
     close_button: UltimateTurboModal.configuration.close_button,
+    close_button_sr_label: "Close modal",
+    close_button_data_action: "modal#hideModal",
     advance: UltimateTurboModal.configuration.advance,
     header: UltimateTurboModal.configuration.header,
     header_divider: UltimateTurboModal.configuration.header_divider,
@@ -20,6 +24,8 @@ class UltimateTurboModal::Base < Phlex::HTML
   )
     @padding = padding
     @close_button = close_button
+    @close_button_sr_label = close_button_sr_label
+    @close_button_data_action = close_button_data_action
     @advance = !!advance
     @advance_url = advance if advance.present? && advance.is_a?(String)
     @title = title
@@ -156,6 +162,7 @@ class UltimateTurboModal::Base < Phlex::HTML
   def div_inner(&)
     div(id: "modal-inner", class: self.class::DIV_INNER_CLASSES, &)
   end
+
   def div_content(&)
     div(id: "modal-content", class: self.class::DIV_CONTENT_CLASSES, data: {modal_target: "content"}, &)
   end
@@ -191,7 +198,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     div(id: "modal-close", class: self.class::BUTTON_CLOSE_CLASSES) do
       close_button_tag do
         icon_close
-        span(class: self.class::BUTTON_CLOSE_SR_ONLY_CLASSES) { "Close modal" }
+        span(class: self.class::BUTTON_CLOSE_SR_ONLY_CLASSES) { @close_button_sr_label }
       end
     end
   end
@@ -201,7 +208,7 @@ class UltimateTurboModal::Base < Phlex::HTML
       aria: {label: "close"},
       class: self.class::CLOSE_BUTTON_TAG_CLASSES,
       data: {
-        action: "modal#hideModal"
+        action: @close_button_data_action
       }, &)
   end
 
