@@ -1,3 +1,7 @@
+## [1.4.1] - 2023-11-26
+
+- Make Tailwind transition smoother on pages with multiple z-index
+
 ## [1.4.0] - 2023-11-23
 
 - Added ability to specify custom `data-action` for the close button.
