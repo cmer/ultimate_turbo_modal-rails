@@ -1,3 +1,7 @@
+## [1.5.0] - 2023-11-28
+
+- Allow whitelisting out-of-modal CSS selectors to not dismiss modal when clicked
+
 ## [1.4.1] - 2023-11-26
 
 - Make Tailwind transition smoother on pages with multiple z-index

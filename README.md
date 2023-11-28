@@ -26,6 +26,7 @@ It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It 
 - Support for long, scrollable modals
 - Properly locks the background page when scrolling a long modal
 - Click outside the modal to dismiss
+- Option to whitelist CSS selectors that won't dismiss the modal when clicked outside the modal (ie: datepicker)
 - Keyboard control; ESC to dismiss
 - Automatic (or not) close button
 
@@ -70,6 +71,7 @@ UltimateTurboModal.configure do |config|
   config.header = true
   config.header_divider = true
   config.footer_divider = true
+  config.allowed_click_outside_selector = nil
 end
 ```
 
@@ -172,6 +174,11 @@ Whether to display a divider below the header.
 ### `footer_divider`, default: `true`
 
 Whether to display a divider above the footer. The divider will not appear if no footer was specified.
+
+### `allowed_click_outside_selector`, default: `nil`
+
+A string of CSS selectors that can be clicked outside of the modal without dismissing the modal. Useful for elements
+such as datepickers.
 
 ### Example usage with options
 

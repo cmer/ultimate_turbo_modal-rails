@@ -2,37 +2,40 @@
 
 class UltimateTurboModal::Base < Phlex::HTML
   prepend Phlex::DeferredRenderWithMainContent
-  # @param padding [Boolean] Whether to add padding around the modal content
-  # @param close_button [Boolean] Whether to show a close button
-  # @param close_button_sr_label [String] Close button label for screen readers
-  # @param close_button_data_action [String] `data-action` attribute for the close button
   # @param advance [Boolean] Whether to update the browser history when opening and closing the modal
-  # @param header_divider [Boolean] Whether to show a divider between the header and the main content
+  # @param allowed_click_outside_selector [String] CSS selectors for elements that are allowed to be clicked outside of the modal without dismissing the modal
+  # @param close_button [Boolean] Whether to show a close button
+  # @param close_button_data_action [String] `data-action` attribute for the close button
+  # @param close_button_sr_label [String] Close button label for screen readers
   # @param footer_divider [Boolean] Whether to show a divider between the main content and the footer
-  # @param title [String] The title of the modal
+  # @param header_divider [Boolean] Whether to show a divider between the header and the main content
+  # @param padding [Boolean] Whether to add padding around the modal content
   # @param request [ActionDispatch::Request] The current Rails request object
+  # @param title [String] The title of the modal
   def initialize(
-    padding: UltimateTurboModal.configuration.padding,
-    close_button: UltimateTurboModal.configuration.close_button,
-    close_button_sr_label: "Close modal",
-    close_button_data_action: "modal#hideModal",
     advance: UltimateTurboModal.configuration.advance,
+    allowed_click_outside_selector: UltimateTurboModal.configuration.allowed_click_outside_selector,
+    close_button: UltimateTurboModal.configuration.close_button,
+    close_button_data_action: "modal#hideModal",
+    close_button_sr_label: "Close modal",
+    footer_divider: UltimateTurboModal.configuration.footer_divider,
     header: UltimateTurboModal.configuration.header,
     header_divider: UltimateTurboModal.configuration.header_divider,
-    footer_divider: UltimateTurboModal.configuration.footer_divider,
-    title: nil, request: nil
+    padding: UltimateTurboModal.configuration.padding,
+    request: nil, title: nil
   )
-    @padding = padding
-    @close_button = close_button
-    @close_button_sr_label = close_button_sr_label
-    @close_button_data_action = close_button_data_action
     @advance = !!advance
     @advance_url = advance if advance.present? && advance.is_a?(String)
-    @title = title
+    @allowed_click_outside_selector = allowed_click_outside_selector
+    @close_button = close_button
+    @close_button_data_action = close_button_data_action
+    @close_button_sr_label = close_button_sr_label
+    @footer_divider = footer_divider
     @header = header
     @header_divider = header_divider
-    @footer_divider = footer_divider
+    @padding = padding
     @request = request
+    @title = title
 
     unless self.class.include?(Turbo::FramesHelper)
       self.class.include Turbo::FramesHelper
@@ -67,7 +70,7 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   private
 
-  attr_accessor :request
+  attr_accessor :request, :allowed_click_outside_selector
 
   def padding? = !!@padding
 
@@ -81,7 +84,7 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   def footer? = @footer.present?
 
-  def header_divider? = !!@header_divider && (@title_block || title?)
+  def header_divider? = !!@header_divider && (@title_block.present? || title?)
 
   def footer_divider? = !!@footer_divider && footer?
 
@@ -135,6 +138,7 @@ class UltimateTurboModal::Base < Phlex::HTML
         controller: "modal",
         modal_target: "container",
         modal_advance_url_value: advance_url,
+        modal_allowed_click_outside_selector_value: allowed_click_outside_selector,
         action: "turbo:submit-end->modal#submitEnd keyup@window->modal#closeWithKeyboard click@window->modal#outsideModalClicked click->modal#outsideModalClicked",
         transition_enter: "ease-out duration-100",
         transition_enter_start: "opacity-0",
