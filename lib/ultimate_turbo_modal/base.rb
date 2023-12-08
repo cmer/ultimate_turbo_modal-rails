@@ -21,6 +21,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     footer_divider: UltimateTurboModal.configuration.footer_divider,
     header: UltimateTurboModal.configuration.header,
     header_divider: UltimateTurboModal.configuration.header_divider,
+    title_tag: UltimateTurboModal.configuration.title_tag,
     padding: UltimateTurboModal.configuration.padding,
     request: nil, title: nil
   )
@@ -33,6 +34,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     @footer_divider = footer_divider
     @header = header
     @header_divider = header_divider
+    @title_tag = title_tag
     @padding = padding
     @request = request
     @title = title
@@ -187,7 +189,7 @@ class UltimateTurboModal::Base < Phlex::HTML
       if @title_block.present?
         render @title_block
       else
-        h3(id: "modal-title-h", class: self.class::DIV_TITLE_H_CLASSES) { @title }
+        send(@title_tag, id: "modal-title-h", class: self.class::DIV_TITLE_H_CLASSES) { @title }
       end
     end
   end

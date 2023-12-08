@@ -15,7 +15,7 @@ module UltimateTurboModal
     :allowed_click_outside_selector, :allowed_click_outside_selector=, to: :configuration
 
   class Configuration
-    attr_reader :flavor, :close_button, :advance, :padding, :header, :header_divider, :footer_divider
+    attr_reader :flavor, :close_button, :advance, :padding, :header, :header_divider, :title_tag, :footer_divider
     attr_accessor :allowed_click_outside_selector
 
     def initialize
@@ -25,6 +25,7 @@ module UltimateTurboModal
       @padding = true
       @header = true
       @header_divider = true
+      @title_tag = :h3
       @footer_divider = true
       @allowed_click_outside_selector = []
     end
@@ -60,6 +61,11 @@ module UltimateTurboModal
     def header_divider=(header_divider)
       raise ArgumentError.new("Value must be a boolean.") unless [true, false].include?(header_divider)
       @header_divider = header_divider
+    end
+
+    def title_tag=(title_tag)
+      raise ArgumentError.new("Value must be a symbol.") unless title_tag.is_a?(Symbol) || title_tag.is_a?(String)
+      @title_tag = title_tag.to_sym
     end
 
     def footer_divider=(footer_divider)
