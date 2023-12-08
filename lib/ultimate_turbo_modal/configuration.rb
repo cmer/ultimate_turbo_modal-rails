@@ -25,7 +25,7 @@ module UltimateTurboModal
       @padding = true
       @header = true
       @header_divider = true
-      @title_tag = :h3
+      @title_tag = :div
       @footer_divider = true
       @allowed_click_outside_selector = []
     end
