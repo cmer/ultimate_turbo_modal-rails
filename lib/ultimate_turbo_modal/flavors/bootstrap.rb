@@ -43,6 +43,10 @@ module UltimateTurboModal::Flavors
           }, &)
     end
 
+    def div_inner(&)
+      div(id: "modal-inner", class: [self.class::DIV_INNER_CLASSES, @bootstrap_modal_size].compact_blank.join(" "), &)
+    end
+
     def div_title
       if @title_block.present?
         send(@title_tag, id: "modal-title", class: self.class::DIV_TITLE_CLASSES) do

@@ -23,7 +23,9 @@ class UltimateTurboModal::Base < Phlex::HTML
     header_divider: UltimateTurboModal.configuration.header_divider,
     title_tag: UltimateTurboModal.configuration.title_tag,
     padding: UltimateTurboModal.configuration.padding,
-    request: nil, title: nil
+    request: nil,
+    title: nil,
+    bootstrap_modal_size: UltimateTurboModal.configuration.bootstrap_modal_size
   )
     @advance = !!advance
     @advance_url = advance if advance.present? && advance.is_a?(String)
@@ -38,6 +40,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     @padding = padding
     @request = request
     @title = title
+    @bootstrap_modal_size = bootstrap_modal_size
 
     unless self.class.include?(Turbo::FramesHelper)
       self.class.include Turbo::FramesHelper

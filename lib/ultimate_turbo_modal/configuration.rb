@@ -15,7 +15,7 @@ module UltimateTurboModal
     :allowed_click_outside_selector, :allowed_click_outside_selector=, to: :configuration
 
   class Configuration
-    attr_reader :flavor, :close_button, :advance, :padding, :header, :header_divider, :title_tag, :footer_divider
+    attr_reader :flavor, :close_button, :advance, :padding, :header, :header_divider, :title_tag, :footer_divider, :bootstrap_modal_size
     attr_accessor :allowed_click_outside_selector
 
     def initialize
@@ -28,6 +28,7 @@ module UltimateTurboModal
       @title_tag = :div
       @footer_divider = true
       @allowed_click_outside_selector = []
+      @bootstrap_modal_size = nil
     end
 
     def flavor=(flavor)
@@ -71,6 +72,11 @@ module UltimateTurboModal
     def footer_divider=(footer_divider)
       raise ArgumentError.new("Value must be a boolean.") unless [true, false].include?(footer_divider)
       @footer_divider = footer_divider
+    end
+
+    def bootstrap_modal_size=(modal_size)
+      raise ArgumentError.new("Value must be a symbol.") unless modal_size.is_a?(Symbol) || modal_size.is_a?(String)
+      @bootstrap_modal_size = modal_size.to_sym
     end
   end
 end
