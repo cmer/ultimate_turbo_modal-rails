@@ -26,6 +26,7 @@ It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It 
 - Support for long, scrollable modals
 - Properly locks the background page when scrolling a long modal
 - Click outside the modal to dismiss
+- Option to whitelist CSS selectors that won't dismiss the modal when clicked outside the modal (ie: datepicker)
 - Keyboard control; ESC to dismiss
 - Automatic (or not) close button
 
@@ -70,6 +71,7 @@ UltimateTurboModal.configure do |config|
   config.header = true
   config.header_divider = true
   config.footer_divider = true
+  config.allowed_click_outside_selector = nil
 end
 ```
 
@@ -159,7 +161,7 @@ If a URL is specified as a String, the browser history will advance, and the URL
 
 ### `title`, default: `nil`
 
-Title to display in the modal header.
+Title to display in the modal header. Alternatively, you can set the title with a block.
 
 ### `header`, default: `true`
 
@@ -173,7 +175,10 @@ Whether to display a divider below the header.
 
 Whether to display a divider above the footer. The divider will not appear if no footer was specified.
 
+### `allowed_click_outside_selector`, default: `nil`
 
+A string of CSS selectors that can be clicked outside of the modal without dismissing the modal. Useful for elements
+such as datepickers.
 
 ### Example usage with options
 
@@ -186,6 +191,24 @@ Whether to display a divider above the footer. The divider will not appear if no
 ```erb
 <%= modal(padding: true, close_button: false, advance: "/foo/bar") do %>
   Hello World!
+<% end %>
+```
+
+### Title and Footer
+
+You can set a custom title and footer by passing a block. For example
+
+```erb
+<%= modal do |m| %>
+  <% m.title do %>
+    <div>My Title</div>
+  <% end %>
+
+  Modal body
+
+  <% m.footer do %>
+    <input type="submit" form="myform">Submit</input>
+  <% end %>
 <% end %>
 ```
 

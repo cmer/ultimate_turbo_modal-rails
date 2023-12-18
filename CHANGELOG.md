@@ -1,3 +1,28 @@
+## [1.5.0] - 2023-11-28
+
+- Allow whitelisting out-of-modal CSS selectors to not dismiss modal when clicked
+
+## [1.4.1] - 2023-11-26
+
+- Make Tailwind transition smoother on pages with multiple z-index
+
+## [1.4.0] - 2023-11-23
+
+- Added ability to specify custom `data-action` for the close button.
+- Code cleanup, deduplication
+
+## [1.3.1] - 2023-11-23
+
+- Bug fixes
+
+## [1.3.0] - 2023-11-14
+
+- Added ability to pass in a `title` block.
+
+## [1.2.1] - 2023-11-11
+
+- Fix footer divider not showing
+
 ## [1.2.0] - 2023-11-05
 
 - Dark mode support

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module UltimateTurboModal
   class << self
     attr_accessor :configuration
@@ -9,10 +11,12 @@ module UltimateTurboModal
   end
 
   delegate :flavor, :flavor=, :close_button, :close_button=,
-    :advance, :advance=, :padding, :padding=, to: :configuration
+    :advance, :advance=, :padding, :padding=,
+    :allowed_click_outside_selector, :allowed_click_outside_selector=, to: :configuration
 
   class Configuration
     attr_reader :flavor, :close_button, :advance, :padding, :header, :header_divider, :footer_divider
+    attr_accessor :allowed_click_outside_selector
 
     def initialize
       @flavor = :tailwind
@@ -22,6 +26,7 @@ module UltimateTurboModal
       @header = true
       @header_divider = true
       @footer_divider = true
+      @allowed_click_outside_selector = []
     end
 
     def flavor=(flavor)
