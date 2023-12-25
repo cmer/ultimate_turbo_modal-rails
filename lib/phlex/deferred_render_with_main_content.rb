@@ -2,8 +2,8 @@
 
 module Phlex
   module DeferredRenderWithMainContent
-    def template(&)
-      output = capture(&)
+    def template(&block)
+      output = capture(&block)
       super { unsafe_raw(output) }
     end
   end

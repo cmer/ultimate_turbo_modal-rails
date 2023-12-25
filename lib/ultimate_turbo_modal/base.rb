@@ -107,26 +107,26 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   ## HTML components
 
-  def modal(&)
+  def modal(&block)
     outer_divs do
       div_content do
         div_header
-        div_main(&)
+        div_main(&block)
         div_footer if footer?
       end
     end
   end
 
-  def outer_divs(&)
+  def outer_divs(&block)
     div_dialog do
       div_overlay
       div_outer do
-        div_inner(&)
+        div_inner(&block)
       end
     end
   end
 
-  def div_dialog(&)
+  def div_dialog(&block)
     div(id: "modal-container",
       class: self.class::DIV_DIALOG_CLASSES,
       role: "dialog",
@@ -152,30 +152,30 @@ class UltimateTurboModal::Base < Phlex::HTML
         close_button: close_button?.to_s,
         header_divider: header_divider?.to_s,
         footer_divider: footer_divider?.to_s
-      }, &)
+      }, &block)
   end
 
   def div_overlay
     div(id: "modal-overlay", class: self.class::DIV_OVERLAY_CLASSES)
   end
 
-  def div_outer(&)
-    div(id: "modal-outer", class: self.class::DIV_OUTER_CLASSES, &)
+  def div_outer(&block)
+    div(id: "modal-outer", class: self.class::DIV_OUTER_CLASSES, &block)
   end
 
-  def div_inner(&)
-    div(id: "modal-inner", class: self.class::DIV_INNER_CLASSES, &)
+  def div_inner(&block)
+    div(id: "modal-inner", class: self.class::DIV_INNER_CLASSES, &block)
   end
 
-  def div_content(&)
-    div(id: "modal-content", class: self.class::DIV_CONTENT_CLASSES, data: {modal_target: "content"}, &)
+  def div_content(&block)
+    div(id: "modal-content", class: self.class::DIV_CONTENT_CLASSES, data: {modal_target: "content"}, &block)
   end
 
-  def div_main(&)
-    div(id: "modal-main", class: self.class::DIV_MAIN_CLASSES, &)
+  def div_main(&block)
+    div(id: "modal-main", class: self.class::DIV_MAIN_CLASSES, &block)
   end
 
-  def div_header(&)
+  def div_header(&block)
     div(id: "modal-header", class: self.class::DIV_HEADER_CLASSES) do
       div_title
       button_close
@@ -207,13 +207,13 @@ class UltimateTurboModal::Base < Phlex::HTML
     end
   end
 
-  def close_button_tag(&)
+  def close_button_tag(&block)
     button(type: "button",
       aria: {label: "close"},
       class: self.class::CLOSE_BUTTON_TAG_CLASSES,
       data: {
         action: @close_button_data_action
-      }, &)
+      }, &block)
   end
 
   def icon_close
