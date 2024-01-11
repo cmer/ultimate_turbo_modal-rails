@@ -1,3 +1,7 @@
+## [1.6.1] - 2024-01-10
+
+- Added ability to specify data attributes for the content div within the modal. Useful to specify a Stimulus controller, for example.
+
 ## [1.6.0] - 2023-12-25
 
 - Support for Ruby 3.3
