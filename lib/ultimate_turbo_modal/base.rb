@@ -11,6 +11,7 @@ class UltimateTurboModal::Base < Phlex::HTML
   # @param header_divider [Boolean] Whether to show a divider between the header and the main content
   # @param padding [Boolean] Whether to add padding around the modal content
   # @param request [ActionDispatch::Request] The current Rails request object
+  # @param content_div_data [Hash] `data` attribute for the div where the modal content will be rendered
   # @param title [String] The title of the modal
   def initialize(
     advance: UltimateTurboModal.configuration.advance,
@@ -22,6 +23,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     header: UltimateTurboModal.configuration.header,
     header_divider: UltimateTurboModal.configuration.header_divider,
     padding: UltimateTurboModal.configuration.padding,
+    content_div_data: nil,
     request: nil, title: nil
   )
     @advance = !!advance
@@ -34,6 +36,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     @header = header
     @header_divider = header_divider
     @padding = padding
+    @content_div_data = content_div_data
     @request = request
     @title = title
 
@@ -70,7 +73,7 @@ class UltimateTurboModal::Base < Phlex::HTML
 
   private
 
-  attr_accessor :request, :allowed_click_outside_selector
+  attr_accessor :request, :allowed_click_outside_selector, :content_div_data
 
   def padding? = !!@padding
 
@@ -164,11 +167,12 @@ class UltimateTurboModal::Base < Phlex::HTML
   end
 
   def div_inner(&block)
-    div(id: "modal-inner", class: self.class::DIV_INNER_CLASSES, &block)
+    div(id: "modal-inner", class: self.class::DIV_INNER_CLASSES, data: content_div_data, &block)
   end
 
   def div_content(&block)
-    div(id: "modal-content", class: self.class::DIV_CONTENT_CLASSES, data: {modal_target: "content"}, &block)
+    data = (content_div_data || {}).merge({modal_target: "content"})
+    div(id: "modal-content", class: self.class::DIV_CONTENT_CLASSES, data:, &block)
   end
 
   def div_main(&block)
