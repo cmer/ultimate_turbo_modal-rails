@@ -9,7 +9,7 @@ require "ultimate_turbo_modal/helpers/stream_helper"
 module UltimateTurboModal
   class Railtie < Rails::Railtie
     initializer "ultimate_turbo_modal.action_controller" do
-      ActiveSupport.on_load(:action_controller) do
+      ActiveSupport.on_load(:action_controller_base) do
         include UltimateTurboModal::Helpers::ControllerHelper
       end
     end
