@@ -2,8 +2,8 @@
 
 module UltimateTurboModal::Helpers
   module ViewHelper
-    def modal(**, &)
-      render(UltimateTurboModal.new(request:, **), &)
+    def modal(**args, &)
+      render(UltimateTurboModal.new(request:, **args), &)
     end
   end
 end
