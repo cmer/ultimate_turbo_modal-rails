@@ -49,7 +49,7 @@ class UltimateTurboModal::Base < Phlex::HTML
     end
   end
 
-  def template(&block)
+  def view_template(&block)
     if turbo_frame?
       turbo_frame_tag("modal") do
         modal(&block)
