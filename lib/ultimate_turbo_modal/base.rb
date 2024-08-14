@@ -142,7 +142,7 @@ class UltimateTurboModal::Base < Phlex::HTML
         modal_target: "container",
         modal_advance_url_value: advance_url,
         modal_allowed_click_outside_selector_value: allowed_click_outside_selector,
-        action: "turbo:submit-end->modal#submitEnd keyup@window->modal#closeWithKeyboard click@window->modal#outsideModalClicked click->modal#outsideModalClicked",
+        action: "keyup@window->modal#closeWithKeyboard click@window->modal#outsideModalClicked click->modal#outsideModalClicked",
         transition_enter: "ease-out duration-100",
         transition_enter_start: "opacity-0",
         transition_enter_end: "opacity-100",
