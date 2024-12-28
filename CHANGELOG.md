@@ -1,3 +1,7 @@
+## [1.7.0] - 2024-12-28
+
+- Fix Phlex deprecation warning
+
 ## [1.6.1] - 2024-01-10
 
 - Added ability to specify data attributes for the content div within the modal. Useful to specify a Stimulus controller, for example.
