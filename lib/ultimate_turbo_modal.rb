@@ -12,8 +12,8 @@ end
 module UltimateTurboModal
   extend self
 
-  def new(**)
-    modal_class.new(**)
+  def new(**args)
+    modal_class.new(**args)
   end
 
   def modal_class
