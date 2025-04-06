@@ -4,9 +4,9 @@ There are MANY Turbo/Hotwire/Stimulus modal dialog implementations out there, an
 
 UTMR aims to be the be-all and end-all of Turbo Modals. I believe it is the best implementation and checks all the boxes. It is feature-rich, yet extremely easy to use.
 
-Under the hood, it uses [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), and the native HTML Dialog element for improved accessibility and browser support.
+Under the hood, it uses [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [el-transition](https://github.com/mmccall10/el-transition), and optionally [Idiomorph](https://github.com/bigskysoftware/idiomorph).
 
-It currently ships in a three flavors: Tailwind v3, Tailwind v4 and regular vanilla CSS. It is easy to create your own variant to suit your needs. See `lib/ultimate_turbo_modal/flavors/vanilla.rb` for an example code.
+It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It is easy to create your own variant to suit your needs. See `lib/ultimate_turbo_modal/flavors/vanilla.rb` for an example code.
 
 
 &nbsp;
@@ -22,13 +22,13 @@ It currently ships in a three flavors: Tailwind v3, Tailwind v4 and regular vani
 - Seamless support for multi-page navigation within the modal
 - Seamless support for forms with validations
 - Seamless support for Rails flash messages
+- Enter/leave animation (fade in/out)
 - Support for long, scrollable modals
 - Properly locks the background page when scrolling a long modal
 - Click outside the modal to dismiss
 - Option to whitelist CSS selectors that won't dismiss the modal when clicked outside the modal (ie: datepicker)
 - Keyboard control; ESC to dismiss
 - Automatic (or not) close button
-- Uses the native HTML Dialog element for best accessibility and browser support
 
 
 &nbsp;
@@ -64,7 +64,7 @@ A demo application can be found at https://github.com/cmer/ultimate_turbo_modal-
 
 ```ruby
 UltimateTurboModal.configure do |config|
-  config.flavor = :tailwind # valid options: :tailwind, :tailwind3, :tailwind4, :vanilla
+  config.flavor = :tailwind
   config.padding = true
   config.advance = true
   config.close_button = true
@@ -148,21 +148,6 @@ If you need to do something a little bit more advanced when the view is shown ou
 
 &nbsp;
 &nbsp;
-## Native HTML Dialog Element
-
-Ultimate Turbo Modal uses the native HTML `<dialog>` element for all modals, providing better accessibility and browser support:
-
-- Better accessibility with native dialog semantics
-- Proper focus trapping
-- Native browser ESC key handling
-- Improved screen reader support
-- Light DOM implementation (fewer nested elements)
-- Automatic handling of backdrop/backdrop styling
-
-The use of the native dialog element is transparent to your application code and should work seamlessly with existing UTMR implementations.
-
-&nbsp;
-&nbsp;
 ## Options
 
 ### `padding`, default: `true`
@@ -216,7 +201,7 @@ such as datepickers.
 
 ### Title and Footer
 
-You can set a custom title and footer by passing a block. For example:
+You can set a custom title and footer by passing a block. For example
 
 ```erb
 <%= modal do |m| %>

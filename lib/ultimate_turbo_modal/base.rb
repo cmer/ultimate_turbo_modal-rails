@@ -111,74 +111,93 @@ class UltimateTurboModal::Base < Phlex::HTML
   ## HTML components
 
   def modal(&block)
-    styles
-    dialog_element do
-      div_content_wrapper do
-        div_header if header?
+    outer_divs do
+      div_content do
+        div_header
         div_main(&block)
         div_footer if footer?
       end
     end
   end
 
-  def styles
-    style do
-      unsafe_raw("html:has(dialog[open]) {overflow: hidden;} html {scrollbar-gutter: stable;}".html_safe)
+  def outer_divs(&block)
+    div_dialog do
+      div_overlay
+      div_outer do
+        div_inner(&block)
+      end
     end
   end
 
-  def dialog_element(&block)
-    dialog(
-      id: "modal-container",
-      class: self.class::DIALOG_CLASSES,
+  def div_dialog(&block)
+    div(id: "modal-container",
+      class: self.class::DIV_DIALOG_CLASSES,
+      role: "dialog",
       aria: {
-        labeled_by: "modal-title-h"
+        labeled_by: "modal-title-h",
+        modal: true
       },
       data: {
         controller: "modal",
         modal_target: "container",
         modal_advance_url_value: advance_url,
         modal_allowed_click_outside_selector_value: allowed_click_outside_selector,
-        action: "turbo:submit-end->modal#submitEnd cancel->modal#outsideModalClicked click@window->modal#outsideModalClicked click->modal#outsideModalClicked",
+        action: "turbo:submit-end->modal#submitEnd keyup@window->modal#closeWithKeyboard click@window->modal#outsideModalClicked click->modal#outsideModalClicked",
+        transition_enter: "ease-out duration-100",
+        transition_enter_start: "opacity-0",
+        transition_enter_end: "opacity-100",
+        transition_leave: "ease-in duration-50",
+        transition_leave_start: "opacity-100",
+        transition_leave_end: "opacity-0",
         padding: padding?.to_s,
         title: title?.to_s,
         header: header?.to_s,
         close_button: close_button?.to_s,
         header_divider: header_divider?.to_s,
         footer_divider: footer_divider?.to_s
-      },
-      &block
-    )
+      }, &block)
   end
 
-  def div_content_wrapper(&block)
+  def div_overlay
+    div(id: "modal-overlay", class: self.class::DIV_OVERLAY_CLASSES)
+  end
+
+  def div_outer(&block)
+    div(id: "modal-outer", class: self.class::DIV_OUTER_CLASSES, &block)
+  end
+
+  def div_inner(&block)
+    div(id: "modal-inner", class: self.class::DIV_INNER_CLASSES, data: content_div_data, &block)
+  end
+
+  def div_content(&block)
     data = (content_div_data || {}).merge({modal_target: "content"})
-    div(id: "modal-content", class: self.class::CONTENT_WRAPPER_CLASSES, data:, &block)
+    div(id: "modal-content", class: self.class::DIV_CONTENT_CLASSES, data:, &block)
   end
 
   def div_main(&block)
-    div(id: "modal-main", class: self.class::MAIN_CLASSES, &block)
+    div(id: "modal-main", class: self.class::DIV_MAIN_CLASSES, &block)
   end
 
-  def div_header
-    div(id: "modal-header", class: self.class::HEADER_CLASSES) do
+  def div_header(&block)
+    div(id: "modal-header", class: self.class::DIV_HEADER_CLASSES) do
       div_title
-      button_close if close_button?
+      button_close
     end
   end
 
   def div_title
-    div(id: "modal-title", class: self.class::TITLE_CLASSES) do
+    div(id: "modal-title", class: self.class::DIV_TITLE_CLASSES) do
       if @title_block.present?
         render @title_block
       else
-        h3(id: "modal-title-h", class: self.class::TITLE_H_CLASSES) { @title }
+        h3(id: "modal-title-h", class: self.class::DIV_TITLE_H_CLASSES) { @title }
       end
     end
   end
 
   def div_footer
-    div(id: "modal-footer", class: self.class::FOOTER_CLASSES) do
+    div(id: "modal-footer", class: self.class::DIV_FOOTER_CLASSES) do
       render @footer
     end
   end
@@ -198,9 +217,7 @@ class UltimateTurboModal::Base < Phlex::HTML
       class: self.class::CLOSE_BUTTON_TAG_CLASSES,
       data: {
         action: @close_button_data_action
-      },
-      form: "dialog",
-      &block)
+      }, &block)
   end
 
   def icon_close

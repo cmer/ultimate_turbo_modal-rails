@@ -1,10 +1,3 @@
-## [2.0.0] - 2025-04-04
-
-- Upgraded to Turbo 8+ (breaking change!)
-- Support for Phlex to 2.x
-- Support for Tailwind v4 (use the `:tailwind3` flavor if you're still on Tailwind v3)
-- Now uses the native Dialog HTML element
-
 ## [1.7.0] - 2024-12-28
 
 - Fix Phlex deprecation warning
