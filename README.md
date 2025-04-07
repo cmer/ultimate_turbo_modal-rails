@@ -22,17 +22,6 @@ $ bundle exec rails g ultimate_turbo_modal:install
 &nbsp;
 &nbsp;
 
-### Upgrading from version 1.x
-
-- Remove the two `setupUltimateTurboModal`-related lines from `app/javascript/controllers/index.js`:
-
-- Remove anything UTMR-specific in `tailwind.config.js`.
-
-- Remove the optional Idiomorph tweaks:
-  - `<script src="https://unpkg.com/idiomorph"></script>` from your HTML
-  - `addEventListener("turbo:before-frame-render", (event) => {...` from `application.js`
-- Update the gem to the newest version and follow the installation instructions above.
-
 ## Features and capabilities
 
 - Extremely easy to use
@@ -163,6 +152,18 @@ You can set a custom title and footer by passing a block. For example
 
 &nbsp;
 &nbsp;
+
+## Upgrading from version 1.x
+
+- Remove the two `setupUltimateTurboModal`-related lines from `app/javascript/controllers/index.js`:
+
+- Remove anything UTMR-specific in `tailwind.config.js`.
+
+- Remove the optional Idiomorph tweaks:
+  - `<script src="https://unpkg.com/idiomorph"></script>` from your HTML
+  - `addEventListener("turbo:before-frame-render", (event) => {...` from `application.js`
+- Update the gem to the newest version and follow the installation instructions above.
+
 ## Thanks
 
 Thanks to [@joeldrapper](https://github.com/joeldrapper) and [@konnorrogers](https://github.com/KonnorRogers) for all the help!
