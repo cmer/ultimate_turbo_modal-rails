@@ -2,15 +2,37 @@
 
 There are MANY Turbo/Hotwire/Stimulus modal dialog implementations out there, and it seems like everyone goes about it a different way. However, as you may have learned the hard way, the majority fall short in different, often subtle ways. They generally cover the basics quite well, but do not check all the boxes for real-world use.
 
-UTMR aims to be the be-all and end-all of Turbo Modals. I believe it is the best implementation and checks all the boxes. It is feature-rich, yet extremely easy to use.
+UTMR aims to be the be-all and end-all of Turbo Modals. I believe it is the best (only?) full-featured implementation and checks all the boxes. It is feature-rich, yet extremely easy to use.
 
-Under the hood, it uses [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [el-transition](https://github.com/mmccall10/el-transition), and optionally [Idiomorph](https://github.com/bigskysoftware/idiomorph).
+Under the hood, it uses [Stimulus](https://stimulus.hotwired.dev), [Turbo](https://turbo.hotwired.dev/), [el-transition](https://github.com/mmccall10/el-transition), and [Idiomorph](https://github.com/bigskysoftware/idiomorph).
 
-It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It is easy to create your own variant to suit your needs. See `lib/ultimate_turbo_modal/flavors/vanilla.rb` for an example code.
-
+It currently ships in a three flavors: Tailwind v3, Tailwind v4 and regular, vanilla CSS. It is easy to create your own variant to suit your needs.
 
 &nbsp;
 &nbsp;
+
+
+## Installation
+
+```
+$ bundle add ultimate_turbo_modal
+$ bundle exec rails g ultimate_turbo_modal:install
+```
+
+&nbsp;
+&nbsp;
+
+### Upgrading from version 1.x
+
+- Remove the two `setupUltimateTurboModal`-related lines from `app/javascript/controllers/index.js`:
+
+- Remove anything UTMR-specific in `tailwind.config.js`.
+
+- Remove the optional Idiomorph tweaks:
+  - `<script src="https://unpkg.com/idiomorph"></script>` from your HTML
+  - `addEventListener("turbo:before-frame-render", (event) => {...` from `application.js`
+- Update the gem to the newest version and follow the installation instructions above.
+
 ## Features and capabilities
 
 - Extremely easy to use
@@ -37,84 +59,6 @@ It currently ships in a two flavors: Tailwind CSS, and regular, vanilla CSS. It 
 
 A demo application can be found at https://github.com/cmer/ultimate_turbo_modal-demo. A video demo can be seen here: [https://youtu.be/BVRDXLN1I78](https://youtu.be/BVRDXLN1I78).
 
-
-&nbsp;
-&nbsp;
-## Installation
-
-1. Install the gem and add to the application's Gemfile by executing:
-
-    $ bundle add ultimate_turbo_modal
-
-2. Install the npm package:
-
-    $ yarn add ultimate_turbo_modal
-
-    - or -
-
-    $ bin/importmap pin ultimate_turbo_modal
-
-3. Add the following as the first element in the `body` tag of `views/layouts/application.html.erb`:
-
-```erb
-<%= turbo_frame_tag "modal" %>
-``````
-
-4. Set your desired flavor and default configuration at `app/config/initializers/ultimate_turbo_modal.rb`.
-
-```ruby
-UltimateTurboModal.configure do |config|
-  config.flavor = :tailwind
-  config.padding = true
-  config.advance = true
-  config.close_button = true
-  config.header = true
-  config.header_divider = true
-  config.footer_divider = true
-  config.allowed_click_outside_selector = nil
-end
-```
-
-5. Register the Stimulus controller in `app/javascript/controllers/index.js` adding the following lines at the end.
-
-```javascript
-import setupUltimateTurboModal from "ultimate_turbo_modal";
-setupUltimateTurboModal(application);
-```
-
-6. If using the Tailwind flavor, add the following to `tailwind.config.js`:
-
-```javascript
-// For npm/yarn
-const { execSync } = require("child_process");
-
-function getUltimateTurboModalPath() {
-  const path = execSync("bundle show ultimate_turbo_modal").toString().trim();
-  return `${path}/**/*.{erb,html,rb}`;
-}
-
-// If using Importmaps, use the following instead:
-// const { execSync } = require('child_process');
-//
-// function getUltimateTurboModalPath() {
-//  const path = execSync('bundle show ultimate_turbo_modal').toString().trim();
-//  return `${path}/**/*.{erb,html,rb}`;
-//}
-```
-
-and then in the `content` section, add `getUltimateTurboModalPath()` as follow:
-
-```javascript
-content: [
- './public/*.html',
- './app/helpers/**/*.rb',
- './app/javascript/**/*.js',
- './app/views/**/*.{erb,haml,html,slim,rb}',
- getUltimateTurboModalPath()
-]
-```
-
-1. Optionally (but recommended), configure UTMR to use Idiomorph. See below for details.
 
 &nbsp;
 &nbsp;
@@ -217,35 +161,11 @@ You can set a custom title and footer by passing a block. For example
 <% end %>
 ```
 
-## Installing & Configuring Idiomorph
-
-Idiomorph can morph Turbo Frame responses to allow seemless navigation within Turbo Frames
-without having to hide and reopen the modal. This is needed to prevent
-the fade out / fade in animations from repeating when navigating within the modal.
-
-You could optionally not use the code below if you do not intend to allow navigation within the modal.
-
-Note that Turbo 8 will include Idiomorph by default.
-
-In the meantime, add `<script src="https://unpkg.com/idiomorph"></script>` to your HTML <head>.
-
-And the following code to `application.js`:
-
-```javascript
-addEventListener("turbo:before-frame-render", (event) => {
-  event.detail.render = (currentElement, newElement) => {
-    Idiomorph.morph(currentElement, newElement, {
-      morphStyle: 'innerHTML'
-    })
-  }
-})
-```
-
 &nbsp;
 &nbsp;
 ## Thanks
 
-Thanks to [@joeldrapper](https://github.com/KonnorRogers) and [@konnorrogers](https://github.com/KonnorRogers) for all the help!
+Thanks to [@joeldrapper](https://github.com/joeldrapper) and [@konnorrogers](https://github.com/KonnorRogers) for all the help!
 
 &nbsp;
 &nbsp;

@@ -25,8 +25,8 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "phlex-rails", ">= 1.0", "< 2.0"
-  spec.add_dependency "rails", ">= 7"
+  spec.add_dependency "phlex-rails"
+  spec.add_dependency "rails"
   spec.add_dependency "stimulus-rails"
   spec.add_dependency "turbo-rails"
 end

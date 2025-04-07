@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Vanilla CSS
 module UltimateTurboModal::Flavors
   class Vanilla < UltimateTurboModal::Base
     DIV_DIALOG_CLASSES = "modal-container"
@@ -7,7 +8,7 @@ module UltimateTurboModal::Flavors
     DIV_OUTER_CLASSES = "modal-outer"
     DIV_INNER_CLASSES = "modal-inner"
     DIV_CONTENT_CLASSES = "modal-content"
-    DIV_MAIN_CLASSES =  "modal-main"
+    DIV_MAIN_CLASSES = "modal-main"
     DIV_HEADER_CLASSES = "modal-header"
     DIV_TITLE_CLASSES = "modal-title"
     DIV_TITLE_H_CLASSES = "modal-title-h"

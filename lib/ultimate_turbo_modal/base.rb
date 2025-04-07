@@ -111,12 +111,19 @@ class UltimateTurboModal::Base < Phlex::HTML
   ## HTML components
 
   def modal(&block)
+    styles
     outer_divs do
       div_content do
         div_header
         div_main(&block)
         div_footer if footer?
       end
+    end
+  end
+
+  def styles
+    style do
+      unsafe_raw("html:has(dialog[open]) {overflow: hidden;} html {scrollbar-gutter: stable;}".html_safe)
     end
   end
 

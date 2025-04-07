@@ -1,3 +1,10 @@
+## [2.0.0] - 2025-04-07 - Breaking changes!
+
+- Much simplified installation with a Rails generator
+- Support for Turbo 8
+- Support for Phlex 2
+- Support for Tailwind v4 (use the `tailwind3` flavor if you're still on Tailwind v3)
+
 ## [1.7.0] - 2024-12-28
 
 - Fix Phlex deprecation warning
