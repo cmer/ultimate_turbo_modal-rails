@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const versionFilePath = path.resolve(__dirname, '..', 'VERSION');
+const versionFilePath = path.resolve(__dirname, '..', '..', 'VERSION');
 const packageJsonPath = path.resolve(__dirname, '..', 'package.json');
 
 // Read version from VERSION file
