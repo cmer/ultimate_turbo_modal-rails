@@ -8,7 +8,6 @@ if ! git diff --quiet; then
   echo "There are uncommitted changes. Aborting."
   exit 1
 fi
-echo "No uncommitted changes found."
 
 echo "Building and releasing gem..."
 bundle exec rake build

@@ -7,10 +7,9 @@ if ! git diff --quiet; then
   echo "There are uncommitted changes. Aborting."
   exit 1
 fi
-echo "No uncommitted changes found."
 
 # Update version
-echo "Updating version..."
+echo "Updating version in package.json..."
 npm run update-version
 
 # Install dependencies
@@ -22,7 +21,7 @@ echo "Building project..."
 npm run build
 
 # Add, commit, and push changes
-VERSION=$(cat VERSION)
+VERSION=$(cat ../VERSION)
 echo "Adding changes to git..."
 git add .
 echo "Committing changes (Release NPM v$VERSION)..."
