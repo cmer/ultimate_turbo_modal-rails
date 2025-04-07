@@ -13,11 +13,11 @@ if [ "$1" == "--help" ]; then
 fi
 
 # Check for uncommitted changes
-echo "Checking for uncommitted changes..."
 if ! git diff --quiet; then
   echo "There are uncommitted changes. Aborting."
   exit 1
 fi
+
 
 if [ "$1" != "--skip-gem" ]; then
   echo "Building and releasing gem..."
@@ -27,7 +27,7 @@ else
   echo "Skipping gem build and release..."
 fi
 
-if [ "$1" == "--skip-js" ]; then
+if [ "$1" != "--skip-js" ]; then
   echo "Building JavaScript..."
   cd javascript
   ./scripts/release-npm.sh
