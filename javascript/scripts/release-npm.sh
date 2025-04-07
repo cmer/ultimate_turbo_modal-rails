@@ -24,9 +24,9 @@ VERSION=$(cat ../VERSION)
 echo "Adding changes to git..."
 git add .
 echo "Committing changes (Release NPM v$VERSION)..."
-git commit -m "Release NPM v$VERSION"
+git commit -m "Release NPM v$VERSION" || true
 echo "Pushing changes..."
-git push
+git push || true
 
 # Publish to npm
 echo "Publishing to npm..."
