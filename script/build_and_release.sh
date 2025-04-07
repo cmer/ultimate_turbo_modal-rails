@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -e
 cd $(dirname $0)/..
 
 # Check for uncommitted changes
@@ -15,10 +15,8 @@ bundle exec rake build
 bundle exec rake release
 
 echo "Building JavaScript..."
-javascript/scripts/release-npm.sh
+cd javascript
+./scripts/release-npm.sh
 
 echo "Done!"
-
-
-
 
