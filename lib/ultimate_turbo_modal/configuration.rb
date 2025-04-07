@@ -19,7 +19,7 @@ module UltimateTurboModal
     attr_accessor :allowed_click_outside_selector
 
     def initialize
-      @flavor = :tailwind4
+      @flavor = :tailwind
       @close_button = true
       @advance = true
       @padding = true
