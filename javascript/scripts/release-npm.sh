@@ -2,10 +2,10 @@
 set -e
 
 # Check for uncommitted changes
-# if ! git diff --quiet; then
-#   echo "There are uncommitted changes. Aborting."
-#   exit 1
-# fi
+if ! git diff --quiet; then
+  echo "There are uncommitted changes. Aborting."
+  exit 1
+fi
 
 # Update version
 echo "Updating version in package.json..."
