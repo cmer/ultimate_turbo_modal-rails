@@ -22,6 +22,15 @@ fi
 if [ "$1" != "--skip-gem" ]; then
   echo "Building and releasing gem..."
   bundle exec rake build
+
+  # Check if Gemfile.lock is git dirty
+  if ! git diff --quiet Gemfile.lock; then
+    echo "Gemfile.lock is dirty. Adding, committing, and pushing."
+    git add Gemfile.lock
+    git commit -m "Update Gemfile.lock"
+    bundle exec rake build
+  fi
+
   bundle exec rake release
 else
   echo "Skipping gem build and release..."

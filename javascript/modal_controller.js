@@ -1,6 +1,9 @@
 import { Controller } from '@hotwired/stimulus';
 import { enter, leave } from 'el-transition';
 
+// This placeholder will be replaced by rollup
+const PACKAGE_VERSION = '__PACKAGE_VERSION__';
+
 export default class extends Controller {
   static targets = ["container", "content"]
   static values = {
@@ -10,6 +13,9 @@ export default class extends Controller {
 
   connect() {
     let _this = this;
+
+    this.#checkVersions();
+
     this.showModal();
 
     this.turboFrame = this.element.closest('turbo-frame');
@@ -104,5 +110,20 @@ export default class extends Controller {
 
   #resetHistoryAdvanced() {
     document.body.removeAttribute("data-turbo-modal-history-advanced");
+  }
+
+  #checkVersions() {
+    const gemVersion = this.element.dataset.utmrVersion;
+
+    if (!gemVersion) {
+      // If the attribute isn't set (e.g., in production), skip the check.
+      return;
+    }
+
+    if (gemVersion !== PACKAGE_VERSION) {
+      console.warn(
+        `[UltimateTurboModal] Version Mismatch!\n\nGem Version: ${gemVersion}\nJS Version:  ${PACKAGE_VERSION}\n\nPlease ensure both the 'ultimate_turbo_modal' gem and the 'ultimate-turbo-modal' npm package are updated to the same version.\nElement:`, this.element
+      );
+    }
   }
 }
