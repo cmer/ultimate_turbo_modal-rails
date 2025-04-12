@@ -1,3 +1,7 @@
+## [2.0.0] - 2025-04-11
+
+- Properly call `raw` for Phlex 2, and `unsafe_raw` for Phlex 1. Thanks @cavenk!
+
 ## [2.0.0] - 2025-04-07 - Breaking changes!
 
 - Much simplified installation with a Rails generator
