@@ -28,7 +28,7 @@ export default {
     replace({
       preventAssignment: true,
       values: {
-        '__PACKAGE_VERSION__': JSON.stringify(packageVersion)
+        '__PACKAGE_VERSION__': packageVersion
       }
     })
   ]
