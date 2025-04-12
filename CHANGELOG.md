@@ -1,4 +1,4 @@
-## [2.0.2] - 2025-04-11
+## [2.0.3] - 2025-04-11
 
 - Warn if the NPM package and Ruby Gem versions don't match.
 
