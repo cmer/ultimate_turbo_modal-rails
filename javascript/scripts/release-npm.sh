@@ -9,15 +9,15 @@ fi
 
 # Update version
 echo "Updating version in package.json..."
-npm run update-version
+yarn update-version
 
 # Install dependencies
 echo "Installing dependencies..."
-npm install
+yarn install
 
 # Build project
 echo "Building project..."
-npm run build
+yarn build
 
 # Add, commit, and push changes
 VERSION=$(cat ../VERSION)
@@ -30,6 +30,6 @@ git push
 
 # Publish to npm
 echo "Publishing to npm..."
-npm publish
+yarn publish
 
 echo "Release complete!"
