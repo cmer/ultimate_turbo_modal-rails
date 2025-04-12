@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ultimate_turbo_modal (2.0.2)
+    ultimate_turbo_modal (2.0.3)
       phlex-rails
       rails
       stimulus-rails
