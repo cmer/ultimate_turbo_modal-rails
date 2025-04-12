@@ -138,32 +138,38 @@ class UltimateTurboModal::Base < Phlex::HTML
   end
 
   def div_dialog(&block)
+    data_attributes = {
+      controller: "modal",
+      modal_target: "container",
+      modal_advance_url_value: advance_url,
+      modal_allowed_click_outside_selector_value: allowed_click_outside_selector,
+      action: "turbo:submit-end->modal#submitEnd keyup@window->modal#closeWithKeyboard click@window->modal#outsideModalClicked click->modal#outsideModalClicked",
+      transition_enter: "ease-out duration-100",
+      transition_enter_start: "opacity-0",
+      transition_enter_end: "opacity-100",
+      transition_leave: "ease-in duration-50",
+      transition_leave_start: "opacity-100",
+      transition_leave_end: "opacity-0",
+      padding: padding?.to_s,
+      title: title?.to_s,
+      header: header?.to_s,
+      close_button: close_button?.to_s,
+      header_divider: header_divider?.to_s,
+      footer_divider: footer_divider?.to_s
+    }
+
+    if defined?(Rails) && (Rails.env.development? || Rails.env.test?)
+      data_attributes[:utmr_version] = UltimateTurboModal::VERSION
+    end
+
     div(id: "modal-container",
       class: self.class::DIV_DIALOG_CLASSES,
       role: "dialog",
       aria: {
-        labeled_by: "modal-title-h",
-        modal: true
+        modal: true,
+        labelledby: "modal-title-h"
       },
-      data: {
-        controller: "modal",
-        modal_target: "container",
-        modal_advance_url_value: advance_url,
-        modal_allowed_click_outside_selector_value: allowed_click_outside_selector,
-        action: "turbo:submit-end->modal#submitEnd keyup@window->modal#closeWithKeyboard click@window->modal#outsideModalClicked click->modal#outsideModalClicked",
-        transition_enter: "ease-out duration-100",
-        transition_enter_start: "opacity-0",
-        transition_enter_end: "opacity-100",
-        transition_leave: "ease-in duration-50",
-        transition_leave_start: "opacity-100",
-        transition_leave_end: "opacity-0",
-        padding: padding?.to_s,
-        title: title?.to_s,
-        header: header?.to_s,
-        close_button: close_button?.to_s,
-        header_divider: header_divider?.to_s,
-        footer_divider: footer_divider?.to_s
-      }, &block)
+      data: data_attributes, &block)
   end
 
   def div_overlay
